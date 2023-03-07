@@ -17,6 +17,8 @@ namespace WPF_MiniForms_CSharp.Models.Helper
                 action(item);
             }
         }
+
+        public static bool IsTrulyEmpty(this string @this) => (string.IsNullOrEmpty(@this) && string.IsNullOrWhiteSpace(@this)) ? true : false;
     }
 }
 
