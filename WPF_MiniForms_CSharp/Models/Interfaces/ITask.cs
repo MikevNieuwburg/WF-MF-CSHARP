@@ -7,6 +7,7 @@ namespace WPF_MiniForms_CSharp.Models.Interfaces
     {
         public string? TaskName { get; }
         public Type? TaskType { get; }
-        public Task? ExecuteTask { get; set;}
+        public Task<bool> Execute();
+
     }
 }

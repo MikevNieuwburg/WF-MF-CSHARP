@@ -9,8 +9,7 @@ namespace WPF_MiniForms_CSharp.Models.Objects
 {
     internal class MailOutObject : ITask
     {
-        private Task _executableTask;
-
+        // Inject email Service?
         public MailOutObject() { }
 
 
@@ -18,6 +17,11 @@ namespace WPF_MiniForms_CSharp.Models.Objects
 
         public Type? TaskType => typeof(MailOutObject);
 
-        public Task? ExecuteTask { get => _executableTask; set => _executableTask = value; }
+        public Task<bool> Execute()
+        {
+            // Send Email
+
+            return true;
+        }
     }
 }

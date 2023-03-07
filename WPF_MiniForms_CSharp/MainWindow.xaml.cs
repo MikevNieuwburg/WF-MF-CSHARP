@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_MiniForms_CSharp.Models.Helper;
+using WPF_MiniForms_CSharp.Models.Interfaces;
 using WPF_MiniForms_CSharp.Models.ViewModels;
 using static System.Windows.Forms.Design.AxImporter;
 
@@ -25,9 +26,18 @@ namespace WPF_MiniForms_CSharp
     /// </summary>
     public partial class MainWindow : Window
     {
+        IEnumerable<ITask> _tasks = new List<ITask>();
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public void OnClick()
+        {
+            foreach (var task in _tasks)
+            {
+                task.Execute(new object);
+            }
         }
     }
 }

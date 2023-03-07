@@ -29,7 +29,7 @@ namespace WPF_MiniForms_CSharp.Views
 
         private void FileDialogOpener(object sender, RoutedEventArgs e)
         {
-            TaskFactoryHelper taskFactoryHelper = new TaskFactoryHelper();
+            BaseFunctions taskFactoryHelper = new BaseFunctions();
             DefaultActions defaultActions = new DefaultActions();
             txtLimitedInput.Text = (string?)taskFactoryHelper.StartQueueProcess(defaultActions.GetFolder) ?? "";
         }

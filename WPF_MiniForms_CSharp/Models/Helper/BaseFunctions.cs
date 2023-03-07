@@ -13,11 +13,13 @@ using System.Windows.Forms;
 
 namespace WPF_MiniForms_CSharp.Models.Helper
 {
-    internal class TaskFactoryHelper
+    internal class BaseFunctions
     {
-        public TaskFactoryHelper()
+        public BaseFunctions()
         {
         }
+
+        internal string GetFolder
 
         internal object? StartQueueProcess(Func<object>? value)
         {
