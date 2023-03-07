@@ -1,0 +1,21 @@
+﻿<Window x:Class="WPF_MiniForms_CSharp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_MiniForms_CSharp"
+        xmlns:uc="clr-namespace:WPF_MiniForms_CSharp.Views"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <uc:FolderBrowserUserControl x:Name="FolderIn" Title="Set Folder in:" MaxLength="255" Height="50" />
+            <uc:FolderBrowserUserControl x:Name="FolderOut" Title="Set Folder out:" MaxLength="255" Height="50" />
+        </StackPanel>
+
+    </Grid>
+</Window>
