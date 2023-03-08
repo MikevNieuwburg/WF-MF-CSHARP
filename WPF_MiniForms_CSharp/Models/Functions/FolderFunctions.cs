@@ -1,39 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WPF_MiniForms_CSharp.Models.Objects;
+using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.Models.Functions
 {
     internal class FolderFunctions
     {
-        private bool DoesDirectoryExist(string InputDirectory) => Directory.Exists(InputDirectory);
-
-        public FolderObject GetFolderInformation(string InputDirectory)
+        public Folder GetFolderInformation(string inputDirectory)
         {
-            if (DoesDirectoryExist(InputDirectory) == false)
-                return new FolderObject();
+            if (Directory.Exists(inputDirectory))
+            {
+                throw new InvalidDataException("Folder does not exist.");
+            }
 
             IEnumerable<string> directories;
             IEnumerable<string> files;
 
-            directories = Directory.EnumerateDirectories(InputDirectory);
-            files = Directory.EnumerateFiles(InputDirectory);
-            return new FolderObject()
-            {
-                ChildDirectories = directories,
-                ChildFiles = files,
-                DoesExist = true
-            };
+            directories = Directory.EnumerateDirectories(inputDirectory);
+            files = Directory.EnumerateFiles(inputDirectory);
+
+            return new Folder(inputDirectory, files, directories);
 
         }
 
-        public IEnumerable<string> GetUnderlayingFiles(string InputDirectory) => (DoesDirectoryExist(InputDirectory) ? Directory.EnumerateFiles(InputDirectory) : new List<string>());
-        public IEnumerable<string> GetUnderlayingFolders(string InputDirectory) => (DoesDirectoryExist(InputDirectory) ? Directory.EnumerateDirectories(InputDirectory) : new List<string>());
+        public string GetTemporaryDirectory(bool ShouldCreateIfNotExists = false)
+        {
+            var TempPath = Path.GetTempPath();
+            if (Directory.Exists(TempPath) == false && ShouldCreateIfNotExists)
+                Directory.CreateDirectory(TempPath);
+            return TempPath;
+        }
+
+        public IEnumerable<string> GetUnderlayingFiles(string inputDirectory) => Directory.EnumerateFiles(inputDirectory);
+        public IEnumerable<string> GetUnderlayingFolders(string inputDirectory) => Directory.EnumerateDirectories(inputDirectory);
 
     }
 }

@@ -5,11 +5,15 @@ namespace WPF_MiniForms_CSharp.Models.Functions
 {
     internal class FolderDialogFunction
     {
+        public FolderDialogFunction()
+        {
+        }
+
         public string Folder(string Title = "")
         {
             using var dialog = new FolderBrowserDialog()
             {
-                Description = (Title == "") ? "Pick a folder" : Title,
+                Description = (Title == string.Empty) ? "Pick a folder" : Title,
                 UseDescriptionForTitle = true,
                 SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 ShowNewFolderButton = true
