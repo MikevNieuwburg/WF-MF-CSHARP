@@ -1,19 +1,19 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 using WPF_MiniForms_CSharp.Models.Modules;
+using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.Views
 {
     public partial class FolderBrowserUserControl : UserControl
     {
         private FolderModule module;
+        private Folder folder;
         public string? Title { get; set; }
         public int? MaxLength { get; set; }
 
-        public event Handler handler;
-        public delegate void Handler(object sender, string e);
+        internal event UserControlEvent ControlEvent;
+        internal delegate void UserControlEvent(object sender, Folder e);
 
         public FolderBrowserUserControl()
         {
@@ -24,12 +24,13 @@ namespace WPF_MiniForms_CSharp.Views
 
         private void FileDialogOpener(object sender, RoutedEventArgs e)
         {
-            txtLimitedInput.Text = module.GetFolder(); 
+            folder = module.GetFolder();
+            EventRaiser();
         }
 
         protected virtual void EventRaiser()
-        { 
-            handler?.Invoke(this, txtLimitedInput.Text);
+        {
+            ControlEvent?.Invoke(this, folder);
         }
     }
 }

@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <StackPanel>
             <uc:FolderBrowserUserControl x:Name="FolderIn" Title="Set Folder in:" MaxLength="255" Height="50" />
-            <uc:FolderBrowserUserControl x:Name="FolderOut" Title="Set Folder out:" MaxLength="255" Height="50" />
+            <uc:FolderBrowserUserControl x:Name="FolderOut" Title="Set Folder out:" MaxLength="255" Height="50" ControlEvent="FolderPicked"/>
         </StackPanel>
 
     </Grid>

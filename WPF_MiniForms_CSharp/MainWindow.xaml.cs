@@ -23,5 +23,10 @@ namespace WPF_MiniForms_CSharp
                 var result = task.Execute();
             }
         }
+
+        private void FolderPicked(object sender, Models.Records.Folder e)
+        {
+
+        }
     }
 }

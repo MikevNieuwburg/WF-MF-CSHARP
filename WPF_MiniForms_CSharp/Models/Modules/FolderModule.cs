@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using WPF_MiniForms_CSharp.Models.Functions;
 using WPF_MiniForms_CSharp.Models.Interfaces;
@@ -8,8 +11,9 @@ namespace WPF_MiniForms_CSharp.Models.Modules
 {
     internal class FolderModule : IModule 
     {
-        public string? TaskName { get => throw new NotImplementedException();}
 
+        #region Interface implementation
+        public string? TaskName { get => throw new NotImplementedException();}
 
         public Type? TaskType => typeof(Folder);
         
@@ -23,14 +27,17 @@ namespace WPF_MiniForms_CSharp.Models.Modules
         {
             return (Task<bool>)Task.Run(() => 
             {
-                _ = GetFolder() != "";
             });
         }
-
-        public string GetFolder()
+        #endregion
+        private FolderFunctions FolderFunctions;
+        public FolderModule() 
         {
-            FolderDialogFunction function = new FolderDialogFunction();
-            return function.Folder();
+            FolderFunctions = new FolderFunctions();
+            
         }
+
+        public Folder GetFolder() => FolderFunctions.GetFolder();
+
     }
 }
