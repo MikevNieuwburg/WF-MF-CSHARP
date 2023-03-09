@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using WPF_MiniForms_CSharp.Models.Helper;
 using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.Models.Functions
@@ -14,7 +15,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions
 
         private void EncodeFile(string file)
         {
-
+            AesEncryptionHelper aesEncryptionHelper = new AesEncryptionHelper();
         }
 
         public bool Encode(string inputDirectory, string filter = "")
