@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:WPF_MiniForms_CSharp.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,5 +27,7 @@
         </Label>
         <TextBox MaxLength="{Binding MaxLength}" Grid.Row="1" Grid.ColumnSpan="2" Name="txtLimitedInput" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
         <Button Content=" Select a folder " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Click="FileDialogOpener"/>
-    </Grid>
+        </Grid>
+        <Button Margin="35" Content="Select" Width="100" Height="30" Click="Button_Click"/>
+    </StackPanel>
 </UserControl>

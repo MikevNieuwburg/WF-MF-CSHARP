@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 using System.Windows;
+using WPF_MiniForms_CSharp.FolderModule;
+using WPF_MiniForms_CSharp.Models.Functions;
 using WPF_MiniForms_CSharp.Models.Interfaces;
 
 namespace WPF_MiniForms_CSharp
@@ -9,11 +12,15 @@ namespace WPF_MiniForms_CSharp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly EncryptionService _encryptionService;
         IEnumerable<IModule> _tasks = new List<IModule>();
-        public MainWindow()
+        public MainWindow(EncryptionService encryptionService, FolderPicker folderPicker)
         {
             InitializeComponent();
+           
+            folderPicker.Show();
             OnClick();
+            this._encryptionService = encryptionService;
         }
 
         public void OnClick()

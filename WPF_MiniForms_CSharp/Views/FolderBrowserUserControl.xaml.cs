@@ -7,7 +7,7 @@ namespace WPF_MiniForms_CSharp.Views
 {
     public partial class FolderBrowserUserControl : UserControl
     {
-        private FolderModule module;
+        private FolderService module;
         private Folder folder;
         public string? Title { get; set; }
         public int? MaxLength { get; set; }
@@ -18,19 +18,24 @@ namespace WPF_MiniForms_CSharp.Views
         public FolderBrowserUserControl()
         {
             InitializeComponent();
-            module = new FolderModule();
+            module = new FolderService();
             this.DataContext = this;
         }
 
         private void FileDialogOpener(object sender, RoutedEventArgs e)
         {
             folder = module.GetFolder();
-            EventRaiser();
+            txtLimitedInput.Text = folder.DirectoryPath;
         }
 
         protected virtual void EventRaiser()
         {
             ControlEvent?.Invoke(this, folder);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            EventRaiser();
         }
     }
 }

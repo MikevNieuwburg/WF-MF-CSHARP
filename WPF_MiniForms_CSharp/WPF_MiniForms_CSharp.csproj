@@ -10,6 +10,16 @@
 
   <ItemGroup>
     <PackageReference Include="itext7" Version="7.2.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Functions\" />
+    <Folder Include="Models\Helper\" />
+    <Folder Include="Models\Interfaces\" />
+    <Folder Include="Models\Modules\" />
+    <Folder Include="Models\Records\" />
   </ItemGroup>
 
 </Project>

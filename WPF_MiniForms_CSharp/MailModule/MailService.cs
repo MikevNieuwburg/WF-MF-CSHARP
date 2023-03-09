@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace WPF_MiniForms_CSharp.Models.Functions
 {
-    internal class MailerFunctions
+    internal class MailService
     {
 
-        public MailerFunctions() 
+        public MailService() 
         {
 
         }
-
 
     }
 }

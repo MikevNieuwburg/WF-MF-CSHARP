@@ -9,7 +9,7 @@ using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.Models.Modules
 {
-    internal class FolderModule : IModule 
+    internal class FolderService : IModule 
     {
 
         #region Interface implementation
@@ -31,7 +31,7 @@ namespace WPF_MiniForms_CSharp.Models.Modules
         }
         #endregion
         private FolderFunctions FolderFunctions;
-        public FolderModule() 
+        public FolderService() 
         {
             FolderFunctions = new FolderFunctions();
             

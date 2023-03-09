@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using WPF_MiniForms_CSharp.Models.Objects;
 using WPF_MiniForms_CSharp.Models.Records;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WPF_MiniForms_CSharp.Models.Functions
 {
@@ -11,31 +9,26 @@ namespace WPF_MiniForms_CSharp.Models.Functions
     {
         public Folder GetFolderInformation(string inputDirectory)
         {
-            if (Directory.Exists(inputDirectory))
+            if (Directory.Exists(inputDirectory) == false)
             {
                 throw new InvalidDataException("Folder does not exist.");
             }
+            var enumeratedFiles = Directory.EnumerateFiles(inputDirectory);
+            var enumeratedFolders = Directory.EnumerateDirectories(inputDirectory);
+            var dictionary = new Dictionary<string, IEnumerable<string>>();
 
-            FolderObject folderObject = new FolderObject()
+            if (enumeratedFolders.Any())
             {
-                Path = inputDirectory,
-                SubFolders = Directory.EnumerateDirectories(inputDirectory),
-                Files = Directory.EnumerateFiles(inputDirectory)
-            };
-
-            if(folderObject.SubFolders.Count() > 0)
-            {
-                var dictionary = new Dictionary<string, IEnumerable<string>>();
-                for (int i = 0; i < folderObject.SubFolders.Count(); i++)
+                for (int i = 0; i < enumeratedFolders.Count(); i++)
                 {
-                    var dir = folderObject.SubFolders.ToArray()[i];
-                    var contentFromDir = Directory.EnumerateFiles(dir);
+                    var dir = enumeratedFolders.ToArray()[i];
+                    var contentFromDir = Directory.EnumerateFiles(dir + '\\');
                     if(contentFromDir.Count() > 0)
                         dictionary.Add(dir, contentFromDir);
                 }
             }
 
-            return new Folder(folderObject.Path, folderObject.Files, folderObject.SubFolders ?? null, folderObject.SubFolderContent ?? null);
+            return new Folder(inputDirectory, enumeratedFiles, enumeratedFolders, dictionary);
 
         }
 
@@ -54,7 +47,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions
                 for (int i = 0; i < directories.Count(); i++)
                 {
                     var dir = directories.ToArray()[i];
-                    var contentFromDir = function.FolderFiles(dir);
+                    var contentFromDir = function.FolderFiles(dir + '\\');
                     if(contentFromDir != null)
                         dictionary.Add(dir, contentFromDir);
 
@@ -71,9 +64,5 @@ namespace WPF_MiniForms_CSharp.Models.Functions
                 Directory.CreateDirectory(TempPath);
             return TempPath;
         }
-
-        public IEnumerable<string> GetUnderlayingFiles(string inputDirectory) => Directory.EnumerateFiles(inputDirectory);
-        public IEnumerable<string> GetUnderlayingFolders(string inputDirectory) => Directory.EnumerateDirectories(inputDirectory);
-
     }
 }
