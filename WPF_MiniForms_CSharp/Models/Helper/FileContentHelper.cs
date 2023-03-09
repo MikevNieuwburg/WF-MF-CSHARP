@@ -1,20 +1,40 @@
-﻿using System;
+﻿using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WPF_MiniForms_CSharp.Models.Functions;
 
 namespace WPF_MiniForms_CSharp.Models.Helper
 {
     internal class FileContentHelper
     {
+        internal void ConvertFileToPDF(string filePath)
+        {
+            FolderFunctions folderFunctions = new FolderFunctions();
+            var tempFolder = folderFunctions.GetTemporaryDirectory();
+            PdfWriter writer = new PdfWriter(tempFolder + "demo.pdf");
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            var fileContent = GetFileContent(filePath);
+            foreach (string line in fileContent)
+            {
+                document.Add(new Paragraph(line)
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT)
+                    .SetFontSize(11));
+            }
+            writer.Close();
+            pdf.Close();
+            document.Close();
+        }
+
         internal IEnumerable<string> GetFileContent(string filePath)
         {
             return File.ReadAllLines(filePath);
         }
 
-        internal IEnumerable<string> ReplaceText (string file, string textTarget, string? textReplacement) 
+        internal IEnumerable<string> ReplaceText(string file, string textTarget, string? textReplacement) 
         {
             if(string.IsNullOrEmpty(textTarget))
                 throw new InvalidDataException("There is no text to replace.");
