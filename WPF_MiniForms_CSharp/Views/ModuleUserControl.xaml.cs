@@ -13,21 +13,14 @@ namespace WPF_MiniForms_CSharp.Views
         public event UserControlEvent ButtonClick;
         public delegate void UserControlEvent(object sender, object passedModule);
 
-        public void StartProcess()
-        {
-            Console.WriteLine("Process Started!");
-            // some code here..
-            OnProcessCompleted();
-        }
-
-        protected virtual void OnProcessCompleted()
-        {
-            ButtonClick?.Invoke(this, obj);
-        }
-
         public ModuleUserControl()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ButtonClick?.Invoke(this, obj);
         }
     }
 }

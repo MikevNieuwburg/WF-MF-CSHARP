@@ -30,7 +30,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="Run program" HorizontalAlignment="Left" Margin="109,375,0,0" VerticalAlignment="Top" Width="100" Height="40"/>
+        <Button Content="Run program" HorizontalAlignment="Left" Margin="109,375,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="Button_Click"/>
         <Label Content="Item Selected :" HorizontalAlignment="Left" Margin="34,323,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
         <Label Content="Module Order" HorizontalAlignment="Left" Margin="376,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
         <Label Content="Log" HorizontalAlignment="Left" Margin="644,14,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>

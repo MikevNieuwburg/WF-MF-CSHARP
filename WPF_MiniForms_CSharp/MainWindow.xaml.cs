@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using WPF_MiniForms_CSharp.FolderModule;
 using WPF_MiniForms_CSharp.Models.Functions;
@@ -17,10 +16,10 @@ namespace WPF_MiniForms_CSharp
         public MainWindow(EncryptionService encryptionService, FolderPicker folderPicker)
         {
             InitializeComponent();
-            this._encryptionService = encryptionService;
+            _encryptionService = encryptionService;
         }
 
-        public void OnClick()
+        private void ExecuteTasks()
         {
             foreach (var task in _tasks)
             {
@@ -28,9 +27,9 @@ namespace WPF_MiniForms_CSharp
             }
         }
 
-        private void FolderPicked(object sender, Models.Records.Folder e)
+        private void ModuleUserControl_ControlEvent(object sender, object passedModule)
         {
-
+            ExecuteTasks();
         }
     }
 }
