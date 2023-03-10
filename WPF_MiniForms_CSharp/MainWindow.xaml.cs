@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-using WPF_MiniForms_CSharp.FolderModule;
-using WPF_MiniForms_CSharp.Models.Functions;
+using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.Models.Interfaces;
 
 namespace WPF_MiniForms_CSharp
@@ -11,12 +10,10 @@ namespace WPF_MiniForms_CSharp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly EncryptionService _encryptionService;
         IEnumerable<IModule> _tasks = new List<IModule>();
-        public MainWindow(EncryptionService encryptionService, FolderPicker folderPicker)
+        public MainWindow()
         {
             InitializeComponent();
-            _encryptionService = encryptionService;
         }
 
         private void ExecuteTasks()
@@ -26,10 +23,10 @@ namespace WPF_MiniForms_CSharp
                 var result = task.Execute();
             }
         }
-
-        private void ModuleUserControl_ControlEvent(object sender, object passedModule)
+        private void ExecuteModules(object sender, object passedModule)
         {
             ExecuteTasks();
+
         }
     }
 }

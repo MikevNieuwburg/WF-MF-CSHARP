@@ -5,9 +5,9 @@ using WPF_MiniForms_CSharp.EncryptionModule;
 
 namespace WPF_MiniForms_CSharp.Models.Helper
 {
-    internal class AesEncryption : IEncryption
+    public class AesEncryption : IEncryption
     {
-        internal byte[] Encrypt(string text, byte[] key, byte[] iv)
+        public byte[] Encrypt(string text, byte[] key, byte[] iv)
         {
             ArgumentException.ThrowIfNullOrEmpty(text);
 
@@ -36,7 +36,7 @@ namespace WPF_MiniForms_CSharp.Models.Helper
             return eData;
         }
 
-        internal string Decrypt(byte[] text, byte[] key, byte[] iv)
+        public string Decrypt(byte[] text, byte[] key, byte[] iv)
         {
             if (text == null || text.Length <= 0)
                 throw new ArgumentNullException("text");

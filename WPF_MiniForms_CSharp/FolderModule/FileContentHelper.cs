@@ -8,9 +8,9 @@ using WPF_MiniForms_CSharp.Models.Functions;
 
 namespace WPF_MiniForms_CSharp.Models.Helper
 {
-    internal class FileContentHelper
+    public class FileContentHelper
     {
-        internal void ConvertFileToPDF(string filePath)
+        public void ConvertFileToPDF(string filePath)
         {
             FolderFunctions folderFunctions = new FolderFunctions();
             var tempFolder = folderFunctions.GetTemporaryDirectory();
@@ -29,12 +29,12 @@ namespace WPF_MiniForms_CSharp.Models.Helper
             document.Close();
         }
 
-        internal IEnumerable<string> GetFileContent(string filePath)
+        public IEnumerable<string> GetFileContent(string filePath)
         {
             return File.ReadAllLines(filePath);
         }
 
-        internal IEnumerable<string> ReplaceText(string file, string textTarget, string? textReplacement) 
+        public IEnumerable<string> ReplaceText(string file, string textTarget, string? textReplacement) 
         {
             if(string.IsNullOrEmpty(textTarget))
                 throw new InvalidDataException("There is no text to replace.");

@@ -12,8 +12,8 @@ namespace WPF_MiniForms_CSharp.Views
         public string? Title { get; set; }
         public int? MaxLength { get; set; }
 
-        internal event UserControlEvent ControlEvent;
-        internal delegate void UserControlEvent(object sender, Folder e);
+        public event UserControlEvent ControlEvent;
+        public delegate void UserControlEvent(object sender, Folder e);
 
         public FolderBrowserUserControl()
         {

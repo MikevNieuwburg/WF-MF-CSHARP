@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="470" Width="800" ResizeMode="NoResize">
     <StackPanel>
-        <uc:ModuleUserControl ButtonClick="ModuleUserControl_ControlEvent" />
+        <uc:ModuleUserControl />
     </StackPanel>
 </Window>

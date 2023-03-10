@@ -2,12 +2,15 @@
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Windows;
+using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.FolderModule;
+using WPF_MiniForms_CSharp.MailModule;
 using WPF_MiniForms_CSharp.Models.Functions;
 using WPF_MiniForms_CSharp.Models.Helper;
 using WPF_MiniForms_CSharp.Models.Interfaces;
 using WPF_MiniForms_CSharp.Models.Modules;
+using WPF_MiniForms_CSharp.Views;
 
 namespace WPF_MiniForms_CSharp
 {
@@ -29,10 +32,14 @@ namespace WPF_MiniForms_CSharp
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<MainWindow>();
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<ModuleUserControl>();
+
             services.AddTransient<FolderService>();
             services.AddTransient<FolderPicker>();
+            services.AddTransient<MailCompose>();
             services.AddTransient<MailService>();
+            services.AddTransient<Modules>();
 
             // Setup encryption
             services.AddEncryptionModule();

@@ -8,29 +8,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
 
-        <ListBox Margin="34,60,516,130" ItemsSource="{Binding Modules}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical" >
-                        <StackPanel Orientation="Horizontal">
-
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <ListBox Margin="314,60,262,35">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical" >
-                        <StackPanel Orientation="Horizontal">
-
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button Content="Run program" HorizontalAlignment="Left" Margin="109,375,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="Button_Click"/>
+        <ListBox Margin="34,60,516,130" />
+        <ListBox Margin="314,60,262,35" />
+        <Button Content="Run program" HorizontalAlignment="Left" Margin="109,375,0,0" VerticalAlignment="Top" Width="100" Height="40"/>
         <Label Content="Item Selected :" HorizontalAlignment="Left" Margin="34,323,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
         <Label Content="Module Order" HorizontalAlignment="Left" Margin="376,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
         <Label Content="Log" HorizontalAlignment="Left" Margin="644,14,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>

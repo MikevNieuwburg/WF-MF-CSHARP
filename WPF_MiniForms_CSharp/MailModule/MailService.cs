@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPF_MiniForms_CSharp.Models.Functions
 {
-    internal class MailService
+    public class MailService
     {
 
         public MailService() 

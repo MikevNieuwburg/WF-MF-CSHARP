@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace WPF_MiniForms_CSharp.Models.Interfaces
 {
-    internal interface IModule
+    public interface IModule
     {
         /// <summary>
         /// Simply set this with nameof(x) where x is the record of the 

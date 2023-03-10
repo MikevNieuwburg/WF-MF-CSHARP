@@ -5,7 +5,7 @@ using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.Models.Functions
 {
-    internal class FolderFunctions
+    public class FolderFunctions
     {
         public Folder GetFolderInformation(string inputDirectory)
         {

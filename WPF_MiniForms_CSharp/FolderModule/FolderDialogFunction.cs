@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WPF_MiniForms_CSharp.Models.Functions
 {
-    internal class FolderDialogFunction
+    public class FolderDialogFunction
     {
         public FolderDialogFunction()
         {
