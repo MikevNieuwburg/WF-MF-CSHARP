@@ -17,9 +17,6 @@ namespace WPF_MiniForms_CSharp
         public MainWindow(EncryptionService encryptionService, FolderPicker folderPicker)
         {
             InitializeComponent();
-           
-            folderPicker.Show();
-            OnClick();
             this._encryptionService = encryptionService;
         }
 

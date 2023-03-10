@@ -20,6 +20,12 @@ namespace WPF_MiniForms_CSharp.Views
     /// </summary>
     public partial class MailComposerUserControl : UserControl
     {
+        public string Receiver { get; set; }
+        public string ReceiverTip { get; set; }
+        public string CarbonReceiver { get; set; }
+        public string CarbonReceiverTip { get; set; }
+        public string BlindCarbonReceiver { get; set; }
+        public string BlindCarbonReceiverTip { get; set; }
         public MailComposerUserControl()
         {
             InitializeComponent();

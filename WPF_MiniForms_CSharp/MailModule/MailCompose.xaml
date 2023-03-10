@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF_MiniForms_CSharp.MailModule"
+        xmlns:local="clr-namespace:WPF_MiniForms_CSharp.MailModule" xmlns:uc="clr-namespace:WPF_MiniForms_CSharp.Views"
         mc:Ignorable="d"
         Title="MailCompose" Height="450" Width="800">
     <Grid>
-        
+        <uc:MailComposerUserControl Receiver="Receiver" CarbonReceiver="CC" BlindCarbonReceiver="BCC" ReceiverTip="If you wish to add more receivers add a semicolon (;)" CarbonReceiverTip="If you wish to add more CC add a semicolon (;)" BlindCarbonReceiverTip="If you wish to add more BCC add a semicolon (;)" />
     </Grid>
 </Window>

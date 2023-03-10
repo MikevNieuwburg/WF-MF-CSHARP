@@ -7,6 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Label Content="{Binding Receiver}" Margin="0,0,756,423" />
+        <TextBox Text="" Margin="10,32,337,393" ToolTip="{Binding ReceiverTip}" />
+        <Label Content="{Binding CarbonReceiver}" Margin="0,58,756,365" />
+        <TextBox Text="" Margin="10,90,337,335" ToolTip="{Binding CarbonReceiverTip}" />
+        <Label Content="{Binding BlindCarbonReceiver}" Margin="0,114,756,309" />
+        <TextBox Text="" Margin="10,146,337,279" ToolTip="{Binding BlindCarbonReceiverTip}" />
+        <Button Content="Set values" Margin="629,372,26,32"/>
     </Grid>
 </UserControl>
