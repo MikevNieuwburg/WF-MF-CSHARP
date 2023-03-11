@@ -7,7 +7,15 @@
         xmlns:uc="clr-namespace:WPF_MiniForms_CSharp.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="470" Width="800" ResizeMode="NoResize">
-    <StackPanel>
-        <uc:ModuleUserControl />
-    </StackPanel>
+    <Grid>
+
+        <ListBox Margin="34,60,516,130" />
+        <ListBox Margin="314,60,262,35" />
+        <Button Content="Run program" HorizontalAlignment="Left" Margin="109,375,0,0" VerticalAlignment="Top" Width="100" Height="40"/>
+        <Label Content="Item Selected :" HorizontalAlignment="Left" Margin="34,323,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
+        <Label Content="Module Order" HorizontalAlignment="Left" Margin="376,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
+        <Label Content="Log" HorizontalAlignment="Left" Margin="644,14,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
+        <ListBox x:Name="informationStack" Margin="570,60,48,35" BorderThickness="1" />
+        <Label Content="Modules" HorizontalAlignment="Left" Margin="110,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
+        </Grid>
 </Window>

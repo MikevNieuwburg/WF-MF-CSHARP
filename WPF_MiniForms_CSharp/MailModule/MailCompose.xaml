@@ -1,12 +1,17 @@
 ﻿<Window x:Class="WPF_MiniForms_CSharp.MailModule.MailCompose"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF_MiniForms_CSharp.MailModule" xmlns:uc="clr-namespace:WPF_MiniForms_CSharp.Views"
         mc:Ignorable="d"
         Title="MailCompose" Height="450" Width="800">
-    <Grid>
-        <uc:MailComposerUserControl Receiver="Receiver" CarbonReceiver="CC" BlindCarbonReceiver="BCC" ReceiverTip="If you wish to add more receivers add a semicolon (;)" CarbonReceiverTip="If you wish to add more CC add a semicolon (;)" BlindCarbonReceiverTip="If you wish to add more BCC add a semicolon (;)" />
-    </Grid>
+    <StackPanel Margin="20" ClipToBounds="True">
+        <Label Content="Receiver" Height="35" FontSize="14" FontWeight="Bold" />
+        <TextBox Text="" ToolTip="{Binding ReceiverTip}" Height="30" />
+        <Label Content="CC" Height="35" FontSize="14" FontWeight="Bold"/>
+        <TextBox Text="" ToolTip="{Binding CarbonReceiverTip}"  Height="30"/>
+        <Label Content="BCC" Height="35" FontSize="14" FontWeight="Bold"/>
+        <TextBox Text="" ToolTip="{Binding BlindCarbonReceiverTip}"  Height="30"/>
+        <Button Content="Set values" Height="50" Width="280" Margin="0,50,0,0"/>
+    </StackPanel>
 </Window>

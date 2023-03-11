@@ -7,6 +7,29 @@
         mc:Ignorable="d"
         Title="FolderPicker" Height="153" Width="661">
     <Grid>
-        <uc:FolderBrowserUserControl Title="FolderIn" MaxLength="255" />
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding Title}" />
+                <Label Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ElementName=txtLimitedInput, Path=Text.Length}" />
+                        <TextBlock Text="/" />
+                        <TextBlock Text="{Binding MaxLength}" />
+                    </StackPanel>
+                </Label>
+                <TextBox MaxLength="{Binding MaxLength}" Grid.Row="1" Grid.ColumnSpan="2" Name="txtLimitedInput" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
+                <Button Content=" Select a folder " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Click="FileDialogOpener"/>
+            </Grid>
+            <Button Margin="35" Content="Select" Width="100" Height="30" Click="Button_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
