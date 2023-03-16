@@ -48,7 +48,6 @@ namespace WPF_MiniForms_CSharp
         {
             await _host.StartAsync();
             var mainWindow = _host.Services.GetRequiredService<MainWindow>();
-            mainWindow.PassHost(_host);
             mainWindow.Show();
             base.OnStartup(e);
         }

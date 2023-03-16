@@ -1,66 +1,69 @@
 ﻿using System;
+using System.Diagnostics;
 using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.Models.Interfaces;
 
-namespace WPF_MiniForms_CSharp.Models.Functions
+namespace WPF_MiniForms_CSharp.Models.Functions;
+
+public class EncryptionService : IModule
 {
-    public class EncryptionService : IModule
+    private FolderFunctions _folderFunctions;
+    private readonly IEncryption _encryption;
+
+    public object TaskInput
     {
-        private FolderFunctions _folderFunctions;
-        private readonly IEncryption _encryption;
+        get;
+        set;
+    }
+    public object? TaskResult
+    {
+        get;
+        set;
+    }
 
-        public object TaskInput 
-        { 
-            get; 
-            set; 
-        }
-        public object? TaskResult 
-        { 
-            get; 
-            set; 
-        }
+    public EncryptionService(IEncryption encryption)
+    {
+        _folderFunctions = new FolderFunctions();
+        _encryption = encryption;
+    }
 
-        public EncryptionService(IEncryption encryption)
+    private void EncodeFile()
+    {
+        if (TaskInput == null)
+            throw new ArgumentNullException(nameof(TaskInput));
+
+        if (TaskInput is CryptoObject encryption)
         {
-            _folderFunctions = new FolderFunctions();
-            _encryption = encryption;
-        }
-
-        private void EncodeFile()
-        {
-            if(TaskInput == null)
-                throw new ArgumentNullException(nameof(TaskInput));
-
-            if(TaskInput is CryptoObject encryption)
+            switch (encryption.EncryptionType)
             {
-                var files = encryption.Folder.FolderContent;
-                var path = encryption.Folder.DirectoryPath ?? encryption.Folder.TemporaryFolder;
-                switch (encryption.EncryptionType)
-                {
-                    case EncryptionType.Standard:
-                        foreach (var file in files) 
+                case EncryptionType.Standard:
+                    foreach (var file in encryption.Folder.FolderContent)
+                    {
+                        try
                         {
-
+                            System.IO.File.Encrypt(file);
                         }
-                        break;
-                    case EncryptionType.Aes:
-                        Encryption encryptionPage = new Encryption();
-                        encryptionPage.ShowDialog();
-                        break;
-                    default:
-                        throw new ArgumentNullException("Please select a value before you try to set a value.");
-                }
-
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex);
+                            throw;
+                        }
+                        finally
+                        {
+                            Debug.WriteLine($"{file} encrypted using System.IO.File.Encrypt");
+                        }
+                    }
+                    break;
+                case EncryptionType.Aes:
+                    Encryption encryptionPage = new Encryption(encryption);
+                    encryptionPage.Show();
+                    break;
+                default:
+                    throw new ArgumentNullException("Please select a value before you try to set a value.");
             }
-
-        }
-
-        public Action Execute()
-        {
-            return () => 
-            {
-                EncodeFile();
-            };
         }
     }
+
+    public Action Execute() => EncodeFile;
+
 }

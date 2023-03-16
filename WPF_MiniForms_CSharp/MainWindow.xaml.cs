@@ -23,11 +23,12 @@ namespace WPF_MiniForms_CSharp
         private readonly List<string> _moduleNames = new List<string>();
         private readonly List<object> _moduleObjects = new List<object>();
 
-        public MainWindow(Modules modules)
+        public MainWindow(Modules modules, IHost host)
         {
             InitializeComponent();
             _modules = modules;
-            
+            _host = host;
+
             foreach (var module in Enum.GetValues(typeof(ModuleEnum.ModulesEnum))) 
             {
                 _moduleNames.Add(string.Concat(module.ToString().Select(s => Char.IsUpper(s) ? " " + s : s.ToString())).TrimStart(' '));
@@ -43,6 +44,8 @@ namespace WPF_MiniForms_CSharp
             if (listBoxModules.SelectedItem == null)
                 return;
             _selectedModule = listBoxModules.SelectedItem.ToString();
+            if(Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModules.SelectedItem.ToString()) is ModuleEnum.ModulesEnum parsedValue)
+                _moduleEnum = parsedValue;
             labelSelectedItem.Content = $"Item Selected : {listBoxModules.SelectedItem}";
         }
 
@@ -73,7 +76,7 @@ namespace WPF_MiniForms_CSharp
                     }
                     break;
                 case ModuleEnum.ModulesEnum.Encrypt:
-                    
+
                     break;
                 case ModuleEnum.ModulesEnum.Decrypt:
                     
@@ -93,11 +96,6 @@ namespace WPF_MiniForms_CSharp
                 default:
                     throw new ArgumentNullException("No module was selected. Please select one before you try to add it.");
             }
-        }
-
-        public void PassHost(IHost host)
-        {
-            _host = host;
         }
 
         private void RunModules(object sender, RoutedEventArgs e)
