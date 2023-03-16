@@ -15,6 +15,7 @@ namespace WPF_MiniForms_CSharp.EncryptionModule
         {
             services.AddTransient<IEncryption, AesEncryption>();
             services.AddTransient<EncryptionService>();
+            services.AddTransient<Encryption>();
             return services;
         }
     }

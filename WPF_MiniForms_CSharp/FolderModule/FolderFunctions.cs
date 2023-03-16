@@ -55,8 +55,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions
 
                 }
             }
-            Folder folder = new Folder(path, tempFolder, files, directories, dictionary);
-            return folder;
+            return new Folder(path, tempFolder, files, directories, dictionary);
         }
 
         private string GetTemporaryDirectory()

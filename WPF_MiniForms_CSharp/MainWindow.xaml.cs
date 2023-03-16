@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using WPF_MiniForms_CSharp.Core;
+using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.FolderModule;
+using WPF_MiniForms_CSharp.Models.Functions;
 using WPF_MiniForms_CSharp.Models.Modules;
 using WPF_MiniForms_CSharp.Models.Records;
 
@@ -76,6 +78,8 @@ namespace WPF_MiniForms_CSharp
                     }
                     break;
                 case ModuleEnum.ModulesEnum.Encrypt:
+                    EncryptionService encryptionService = new EncryptionService(_host.Services.GetRequiredService<Encryption>());
+                    encryptionService.GetCryptoObject();
 
                     break;
                 case ModuleEnum.ModulesEnum.Decrypt:
@@ -100,6 +104,7 @@ namespace WPF_MiniForms_CSharp
 
         private void RunModules(object sender, RoutedEventArgs e)
         {
+
         }
     }
 }

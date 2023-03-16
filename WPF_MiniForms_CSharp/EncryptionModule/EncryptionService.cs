@@ -7,8 +7,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions;
 
 public class EncryptionService : IModule
 {
-    private FolderFunctions _folderFunctions;
-    private readonly IEncryption _encryption;
+    private Encryption _encryption;
 
     public object TaskInput
     {
@@ -21,10 +20,9 @@ public class EncryptionService : IModule
         set;
     }
 
-    public EncryptionService(IEncryption encryption)
+    public EncryptionService(Encryption encryptionPage)
     {
-        _folderFunctions = new FolderFunctions();
-        _encryption = encryption;
+        _encryption = encryptionPage;
     }
 
     private void EncodeFile()
@@ -62,6 +60,17 @@ public class EncryptionService : IModule
                     throw new ArgumentNullException("Please select a value before you try to set a value.");
             }
         }
+    }
+
+    public void GetCryptoObject()
+    {
+        _encryption.Show();
+        _encryption.Closing += _encryption_Closing;
+    }
+
+    private void _encryption_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+    {
+        TaskResult = _encryption.GetEncryptionObject;
     }
 
     public Action Execute() => EncodeFile;

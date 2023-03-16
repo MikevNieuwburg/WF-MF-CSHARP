@@ -30,5 +30,7 @@ namespace WPF_MiniForms_CSharp.EncryptionModule
         {
             _encryption = encryption;
         }
+
+        public CryptoObject GetEncryptionObject => _encryption;
     }
 }

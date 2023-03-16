@@ -25,13 +25,7 @@ namespace WPF_MiniForms_CSharp.Models.Modules
             set; 
         }
 
-        public Action Execute()
-        {
-            return () =>
-            {
-                TaskResult = GetFolder();
-            };
-        }
+        public Action Execute() => () => TaskResult = GetFolder();
         #endregion
         private FolderFunctions FolderFunctions;
         public FolderService() 
