@@ -13,21 +13,24 @@ namespace WPF_MiniForms_CSharp.Models.Modules
     {
 
         #region Interface implementation
-        public string? TaskName { get => throw new NotImplementedException();}
-
-        public Type? TaskType => typeof(Folder);
         
         public object? TaskResult 
         { 
             get; 
             set; 
         }
+        public object TaskInput 
+        { 
+            get; 
+            set; 
+        }
 
-        public Task<bool> Execute()
+        public Action Execute()
         {
-            return (Task<bool>)Task.Run(() => 
+            return () =>
             {
-            });
+                TaskResult = GetFolder();
+            };
         }
         #endregion
         private FolderFunctions FolderFunctions;

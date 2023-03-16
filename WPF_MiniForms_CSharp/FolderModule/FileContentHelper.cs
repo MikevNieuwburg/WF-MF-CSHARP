@@ -13,8 +13,8 @@ namespace WPF_MiniForms_CSharp.Models.Helper
         public void ConvertFileToPDF(string filePath)
         {
             FolderFunctions folderFunctions = new FolderFunctions();
-            var tempFolder = folderFunctions.GetTemporaryDirectory();
-            PdfWriter writer = new PdfWriter(tempFolder + "demo.pdf");
+            var folder = folderFunctions.GetFolder();
+            PdfWriter writer = new PdfWriter(folder.TemporaryFolder + "demo.pdf");
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
             var fileContent = GetFileContent(filePath);

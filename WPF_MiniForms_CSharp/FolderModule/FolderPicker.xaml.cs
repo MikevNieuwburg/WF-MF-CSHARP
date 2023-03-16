@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using WPF_MiniForms_CSharp.Models.Modules;
+using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.FolderModule
 {
@@ -19,10 +9,24 @@ namespace WPF_MiniForms_CSharp.FolderModule
     /// </summary>
     public partial class FolderPicker : Window
     {
+        private Folder _folder;
+        public FolderService Service { get; set; }
         public FolderPicker()
         {
             InitializeComponent();
             DataContext = this;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var folder = Service.GetFolder();
+            _folder = folder;
+            txtLimitedInput.Text = _folder.DirectoryPath;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Service.TaskResult = _folder;
         }
     }
 }

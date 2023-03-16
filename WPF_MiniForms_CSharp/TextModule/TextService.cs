@@ -1,14 +1,12 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniForms.Models
+namespace WPF_MiniForms_CSharp.TextModule
 {
-    public class MailProperties
+    internal class TextService
     {
-        
     }
 }

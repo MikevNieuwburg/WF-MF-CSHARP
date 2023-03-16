@@ -4,14 +4,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MailCompose" Height="450" Width="800">
+        Title="Mail Out Module" Height="350" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Core/StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <StackPanel Margin="20" ClipToBounds="True">
-        <Label Content="Receiver" Height="35" FontSize="14" FontWeight="Bold" />
-        <TextBox Text="" ToolTip="{Binding ReceiverTip}" Height="30" />
-        <Label Content="CC" Height="35" FontSize="14" FontWeight="Bold"/>
-        <TextBox Text="" ToolTip="{Binding CarbonReceiverTip}"  Height="30"/>
-        <Label Content="BCC" Height="35" FontSize="14" FontWeight="Bold"/>
-        <TextBox Text="" ToolTip="{Binding BlindCarbonReceiverTip}"  Height="30"/>
-        <Button Content="Set values" Height="50" Width="280" Margin="0,50,0,0"/>
+        <Label Content="Receiver" Style="{StaticResource headerLabel}" />
+        <TextBox Text="" ToolTip="Add receiver, use a semicolon (;) to use multiple." Style="{StaticResource bigTextBox}" />
+        <Label Content="CC" Style="{StaticResource headerLabel}" />
+        <TextBox Text="" ToolTip="Add a carbon copy receiver, use a semicolon (;) to use multiple."  Style="{StaticResource bigTextBox}"/>
+        <Label Content="BCC" Style="{StaticResource headerLabel}" />
+        <TextBox Text="" ToolTip="Add a blind carbon copy, use a semicolon (;) to use multiple."  Style="{StaticResource bigTextBox}"/>
+        <Button Content="Set values" Style="{StaticResource bigButton}" Margin="0,25,0,0"/>
     </StackPanel>
 </Window>

@@ -16,6 +16,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions
             var enumeratedFiles = Directory.EnumerateFiles(inputDirectory);
             var enumeratedFolders = Directory.EnumerateDirectories(inputDirectory);
             var dictionary = new Dictionary<string, IEnumerable<string>>();
+            var tempDirectory = GetTemporaryDirectory();
 
             if (enumeratedFolders.Any())
             {
@@ -28,7 +29,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions
                 }
             }
 
-            return new Folder(inputDirectory, enumeratedFiles, enumeratedFolders, dictionary);
+            return new Folder(inputDirectory,tempDirectory, enumeratedFiles, enumeratedFolders, dictionary);
 
         }
 
@@ -41,6 +42,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions
             var files = function.FolderFiles(path);
             var directories = function.FolderDirectories(path);
             var dictionary = new Dictionary<string, IEnumerable<string>>();
+            var tempFolder = GetTemporaryDirectory();
 
             if (directories?.Count() > 0)
             {
@@ -53,14 +55,14 @@ namespace WPF_MiniForms_CSharp.Models.Functions
 
                 }
             }
-            Folder folder = new Folder(path, files, directories, dictionary);
+            Folder folder = new Folder(path, tempFolder, files, directories, dictionary);
             return folder;
         }
 
-        public string GetTemporaryDirectory(bool ShouldCreateIfNotExists = false)
+        private string GetTemporaryDirectory()
         {
-            var TempPath = Path.GetTempPath();
-            if (Directory.Exists(TempPath) == false && ShouldCreateIfNotExists)
+            var TempPath = $"{Path.GetTempPath()}AdvancedMiniForms\\";
+            if (Directory.Exists(TempPath ) == false)
                 Directory.CreateDirectory(TempPath);
             return TempPath;
         }

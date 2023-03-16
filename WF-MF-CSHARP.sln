@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
+# Blend for Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniForms", "MiniForms\MiniForms.csproj", "{7800B301-CB2F-4A92-8207-6021FE27742E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_MiniForms_CSharp", "WPF_MiniForms_CSharp\WPF_MiniForms_CSharp.csproj", "{3B560162-6156-450F-AADE-B00F1012AB15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF_MiniForms_CSharp", "WPF_MiniForms_CSharp\WPF_MiniForms_CSharp.csproj", "{3B560162-6156-450F-AADE-B00F1012AB15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7800B301-CB2F-4A92-8207-6021FE27742E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7800B301-CB2F-4A92-8207-6021FE27742E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7800B301-CB2F-4A92-8207-6021FE27742E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7800B301-CB2F-4A92-8207-6021FE27742E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B560162-6156-450F-AADE-B00F1012AB15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B560162-6156-450F-AADE-B00F1012AB15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B560162-6156-450F-AADE-B00F1012AB15}.Release|Any CPU.ActiveCfg = Release|Any CPU

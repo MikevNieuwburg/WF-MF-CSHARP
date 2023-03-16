@@ -1,0 +1,31 @@
+﻿<Window x:Class="WPF_MiniForms_CSharp.TextModule.ConvertComposer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_MiniForms_CSharp.TextModule"
+        mc:Ignorable="d"
+        Title="Text Converter" Height="180" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="\Core\StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Style="{StaticResource ResourceKey=stackBody}">
+        <Label Content="Convert" Style="{StaticResource headerBoldLabel}"/>
+        <StackPanel Style="{StaticResource ResourceKey=stackHorizontal}">
+            <TextBox Text="" HorizontalAlignment="Stretch" Width="500" Margin="0,0,5,0"/>
+            <Label Content="Filter : " VerticalAlignment="Center"/>
+            <TextBox Text="*.*" HorizontalAlignment="Stretch" Width="75" ToolTip="Fill in the extension of the file as following *.xml | *.pdf | *.docx"/>
+            <Label Content="Convert to : " VerticalAlignment="Center"/>
+            <ComboBox HorizontalAlignment="Stretch" Width="75">
+                <ComboBoxItem Content="PDF"/>
+                <ComboBoxItem Content="Word"/>
+                <ComboBoxItem Content="Custom"/>
+            </ComboBox>
+        </StackPanel>
+        <Button Content="Set Conversion" Style="{StaticResource buttonDefault}" Margin="20"/>
+    </StackPanel>
+</Window>

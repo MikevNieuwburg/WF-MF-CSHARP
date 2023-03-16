@@ -46,25 +46,20 @@ namespace WPF_MiniForms_CSharp.Models.Helper
                 throw new ArgumentNullException("iv");
 
             string eData;
-            using (Aes aes = Aes.Create())
-            {
-                aes.Key = key;
-                aes.IV = iv;
-                aes.Mode = CipherMode.CBC;
-                aes.Padding = PaddingMode.None;
-                aes.BlockSize = 128;
-                using (MemoryStream memoryStream = new MemoryStream(text))
-                {
-                    using (CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(aes.Key, aes.IV), CryptoStreamMode.Read))
-                    {
-                        using (StreamReader streamReader = new StreamReader(cryptoStream))
-                        {
-                            eData = streamReader.ReadToEnd();
-                        }
-                    }
-                }
-                return eData;
-            }
+            using Aes aes = Aes.Create();
+            aes.Key = key;
+            aes.IV = iv;
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.None;
+            aes.BlockSize = 128;
+
+            using MemoryStream memoryStream = new MemoryStream(text);
+            using CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(aes.Key, aes.IV), CryptoStreamMode.Read);
+            using StreamReader streamReader = new StreamReader(cryptoStream);
+            eData = streamReader.ReadToEnd();
+
+            return eData;
+
 
         }
 
