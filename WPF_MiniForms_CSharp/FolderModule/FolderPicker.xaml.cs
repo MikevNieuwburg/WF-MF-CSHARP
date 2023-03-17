@@ -24,6 +24,8 @@ public partial class FolderPicker : Window
 
     private void Button_Click_1(object sender, RoutedEventArgs e)
     {
+        DialogResult = true;
         _service.TaskResult = _folder;
+        Close();
     }
 }

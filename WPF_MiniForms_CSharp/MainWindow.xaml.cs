@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media.Media3D;
 using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.FolderModule;
@@ -20,7 +21,6 @@ namespace WPF_MiniForms_CSharp
         private string _selectedModule;
         private ModuleEnum.ModulesEnum _moduleEnum;
         private readonly Modules _modules;
-        private readonly EncryptionService _encryption;
         private readonly List<string> _moduleNames = new List<string>();
         private readonly List<IService> _moduleObjects = new List<IService>();
 
@@ -30,9 +30,9 @@ namespace WPF_MiniForms_CSharp
             _modules = modules;
             _host = host;
 
-            foreach (var module in Enum.GetValues(typeof(ModuleEnum.ModulesEnum))) 
+            foreach (var module in Enum.GetValues(typeof(ModuleEnum.ModulesEnum)))
             {
-                _moduleNames.Add(string.Concat(module.ToString().Select(s => Char.IsUpper(s) ? " " + s : s.ToString())).TrimStart(' '));
+                _moduleNames.Add(string.Concat(module.ToString()!.Select(s => char.IsUpper(s) ? " " + s : s.ToString())).TrimStart(' '));
             }
 
             listBoxModules.ItemsSource = _moduleNames;
@@ -44,8 +44,8 @@ namespace WPF_MiniForms_CSharp
         {
             if (listBoxModules.SelectedItem == null)
                 return;
-            _selectedModule = listBoxModules.SelectedItem.ToString();
-            if(Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModules.SelectedItem.ToString().Replace(" ", "")) is ModuleEnum.ModulesEnum parsedValue)
+            _selectedModule = listBoxModules.SelectedItem.ToString()!;
+            if(Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModules.SelectedItem.ToString()!.Replace(" ", "")) is ModuleEnum.ModulesEnum parsedValue)
                 _moduleEnum = parsedValue;
             labelSelectedItem.Content = $"Item Selected : {listBoxModules.SelectedItem}";
         }
@@ -55,25 +55,31 @@ namespace WPF_MiniForms_CSharp
             switch (_moduleEnum)
             {
                 case ModuleEnum.ModulesEnum.FolderIn:
-                    _host.Services.GetRequiredService<FolderPicker>().Show();
-                    break;
                 case ModuleEnum.ModulesEnum.FolderOut:
-                    _host.Services.GetRequiredService<FolderPicker>().Show();
+                    var folderWindow = _host.Services.GetRequiredService<FolderPicker>();
+                    if(folderWindow.ShowDialog() == true)
+                        listBoxModuleOrder.Items.Add(_selectedModule);
                     break;
                 case ModuleEnum.ModulesEnum.Encrypt:
-                    _host.Services.GetRequiredService<Encryption>().Show();
-                    break;
                 case ModuleEnum.ModulesEnum.Decrypt:
-                    _host.Services.GetRequiredService<Encryption>().Show();
+                    var encryptionWindow = _host.Services.GetRequiredService<Encryption>();
+                    if(encryptionWindow.ShowDialog() == true)
+                        listBoxModuleOrder.Items.Add(_selectedModule);
                     break;
                 case ModuleEnum.ModulesEnum.MailOut:
-                    _host.Services.GetRequiredService<MailCompose>().Show();
+                    var mailWindow = _host.Services.GetRequiredService<MailCompose>();
+                    if (mailWindow.ShowDialog() == true)
+                        listBoxModuleOrder.Items.Add(_selectedModule);
                     break;
                 case ModuleEnum.ModulesEnum.TextReplace:
-                    _host.Services.GetRequiredService<TextReplace>().Show();
+                    var replaceWindow = _host.Services.GetRequiredService<TextReplace>();
+                    if (replaceWindow.ShowDialog() == true)
+                        listBoxModuleOrder.Items.Add(_selectedModule);
                     break;
                 case ModuleEnum.ModulesEnum.TextToPdf:
-                    _host.Services.GetRequiredService<ConvertComposer>().Show();
+                    var convertWindow = _host.Services.GetRequiredService<ConvertComposer>();
+                    if (convertWindow.ShowDialog() == true)
+                        listBoxModuleOrder.Items.Add(_selectedModule);
                     break;
                 case ModuleEnum.ModulesEnum.WordTemplate:
                     break;

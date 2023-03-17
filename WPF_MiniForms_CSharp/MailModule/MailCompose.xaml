@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Mail Out Module" Height="350" Width="800" ResizeMode="NoResize">
+        Title="Mail Out Module" Height="650" Width="890" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,6 +19,10 @@
         <TextBox Text="" ToolTip="Add a carbon copy receiver, use a semicolon (;) to use multiple."  Style="{StaticResource bigTextBox}"/>
         <Label Content="BCC" Style="{StaticResource headerLabel}" />
         <TextBox Text="" ToolTip="Add a blind carbon copy, use a semicolon (;) to use multiple."  Style="{StaticResource bigTextBox}"/>
+        <Label Content="Subject" Style="{StaticResource headerLabel}" />
+        <TextBox Text="" ToolTip="Add a blind carbon copy, use a semicolon (;) to use multiple."  Style="{StaticResource bigTextBox}"/>
+        <Label Content="Message" Style="{StaticResource headerLabel}" />
+        <TextBox Text="" ToolTip="Add a blind carbon copy, use a semicolon (;) to use multiple." ClipToBounds="True" Height="198" AcceptsReturn="True" TextWrapping="WrapWithOverflow" BorderThickness="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
         <Button Content="Set values" Style="{StaticResource bigButton}" Margin="0,25,0,0"/>
     </StackPanel>
 </Window>

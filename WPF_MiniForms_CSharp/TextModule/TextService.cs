@@ -48,6 +48,7 @@ internal class TextService : IService
             if (lines[i].Contains(_textObject.ReplaceFrom))
                 lines[i] = lines[i].Replace(_textObject.ReplaceFrom, _textObject.ReplaceWith);
         }
+        File.WriteAllLines(filePath, lines);
     }
 
     public void TextReplace(List<string> folderContent)
@@ -60,4 +61,3 @@ internal class TextService : IService
         throw new System.NotImplementedException();
     }
 }
-public record TextSettings(string ReplaceFrom, string ReplaceWith, string Filter, string File);

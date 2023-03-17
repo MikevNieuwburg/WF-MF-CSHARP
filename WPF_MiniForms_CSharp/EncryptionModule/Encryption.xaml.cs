@@ -21,13 +21,10 @@ namespace WPF_MiniForms_CSharp.EncryptionModule
     {
         private CryptoObject _encryption;
 
-        public Encryption()
-        {
-            InitializeComponent();
-        }
-
         public Encryption(CryptoObject encryption)
         {
+            InitializeComponent();
+
             _encryption = encryption;
         }
 

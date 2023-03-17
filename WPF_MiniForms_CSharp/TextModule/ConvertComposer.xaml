@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_MiniForms_CSharp.TextModule"
         mc:Ignorable="d"
-        Title="Text Converter" Height="180" Width="800" ResizeMode="NoResize">
+        Title="Text Converter" Height="200" Width="820" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
