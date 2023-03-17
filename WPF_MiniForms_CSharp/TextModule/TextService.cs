@@ -3,12 +3,16 @@ using iText.Layout;
 using iText.Layout.Element;
 using System.Collections.Generic;
 using System.IO;
+using WPF_MiniForms_CSharp.Models.Interfaces;
 
 namespace WPF_MiniForms_CSharp.TextModule;
 
-internal class TextService
+internal class TextService : IService
 {
     private readonly TextSettings _textObject;
+
+    public object TaskInput { get; set; }
+    public object? TaskResult { get; set; }
 
     public TextService(TextSettings textObject)
     {
@@ -49,6 +53,11 @@ internal class TextService
     public void TextReplace(List<string> folderContent)
     {
         folderContent.ForEach(TextReplace);
+    }
+
+    public void Execute()
+    {
+        throw new System.NotImplementedException();
     }
 }
 public record TextSettings(string ReplaceFrom, string ReplaceWith, string Filter, string File);

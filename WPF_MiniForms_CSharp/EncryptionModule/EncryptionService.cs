@@ -5,7 +5,7 @@ using WPF_MiniForms_CSharp.Models.Interfaces;
 
 namespace WPF_MiniForms_CSharp.Models.Functions;
 
-public class EncryptionService : IModule
+public class EncryptionService : IService
 {
     private Encryption _encryption;
 
@@ -73,6 +73,6 @@ public class EncryptionService : IModule
         TaskResult = _encryption.GetEncryptionObject;
     }
 
-    public Action Execute() => EncodeFile;
+    public void Execute() { EncodeFile(); }
 
 }

@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 
 namespace WPF_MiniForms_CSharp.Models.Interfaces
 {
-    public interface IModule
+    public interface IService
     {
         
         /// <summary>
         /// This is the execute functionality which will return a boolean whether it has completed successfully or not.
         /// </summary>
         /// <returns></returns>
-        public Action Execute();
+        public void Execute();
 
         /// <summary>
         /// TaskType will return what the type is of the result once Execute has ran to completion. <para><see cref="typeof(record)"/></para>

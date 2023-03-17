@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using WPF_MiniForms_CSharp.FolderModule;
 using WPF_MiniForms_CSharp.Models.Functions;
+using WPF_MiniForms_CSharp.Models.Interfaces;
 using WPF_MiniForms_CSharp.Models.Modules;
 
 namespace WPF_MiniForms_CSharp.Core
@@ -28,9 +29,9 @@ namespace WPF_MiniForms_CSharp.Core
         }
 
 
-        public void StartTask(Action task)
+        public void StartTask(IService task)
         {
-            task.Invoke();
+            task.Execute();
         }
     }
 }

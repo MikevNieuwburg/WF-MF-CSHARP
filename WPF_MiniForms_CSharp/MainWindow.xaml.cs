@@ -7,23 +7,22 @@ using System.Windows;
 using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.FolderModule;
+using WPF_MiniForms_CSharp.MailModule;
 using WPF_MiniForms_CSharp.Models.Functions;
-using WPF_MiniForms_CSharp.Models.Modules;
-using WPF_MiniForms_CSharp.Models.Records;
+using WPF_MiniForms_CSharp.Models.Interfaces;
+using WPF_MiniForms_CSharp.TextModule;
 
 namespace WPF_MiniForms_CSharp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private IHost _host;
         private string _selectedModule;
         private ModuleEnum.ModulesEnum _moduleEnum;
         private readonly Modules _modules;
+        private readonly EncryptionService _encryption;
         private readonly List<string> _moduleNames = new List<string>();
-        private readonly List<object> _moduleObjects = new List<object>();
+        private readonly List<IService> _moduleObjects = new List<IService>();
 
         public MainWindow(Modules modules, IHost host)
         {
@@ -46,7 +45,7 @@ namespace WPF_MiniForms_CSharp
             if (listBoxModules.SelectedItem == null)
                 return;
             _selectedModule = listBoxModules.SelectedItem.ToString();
-            if(Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModules.SelectedItem.ToString()) is ModuleEnum.ModulesEnum parsedValue)
+            if(Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModules.SelectedItem.ToString().Replace(" ", "")) is ModuleEnum.ModulesEnum parsedValue)
                 _moduleEnum = parsedValue;
             labelSelectedItem.Content = $"Item Selected : {listBoxModules.SelectedItem}";
         }
@@ -56,46 +55,27 @@ namespace WPF_MiniForms_CSharp
             switch (_moduleEnum)
             {
                 case ModuleEnum.ModulesEnum.FolderIn:
-                    var folderinService = _modules.GetFolderPicker(_host.Services.GetRequiredService<FolderPicker>(), _host.Services.GetRequiredService<FolderService>());
-                    _modules.StartTask(folderinService.Service.Execute());
-                    if (folderinService.Service.TaskResult is Folder folderIn)
-                    {
-                        if (string.IsNullOrEmpty(folderIn.DirectoryPath))
-                            return;
-                        listBoxModuleOrder.Items.Add(_selectedModule);
-                        _moduleObjects.Add(folderIn);
-                    }
+                    _host.Services.GetRequiredService<FolderPicker>().Show();
                     break;
                 case ModuleEnum.ModulesEnum.FolderOut:
-                    var folderoutService = _modules.GetFolderPicker(_host.Services.GetRequiredService<FolderPicker>(), _host.Services.GetRequiredService<FolderService>());
-                    _modules.StartTask(folderoutService.Service.Execute());
-                    if (folderoutService.Service.TaskResult is Folder folderOut)
-                    {
-                        if (string.IsNullOrEmpty(folderOut.DirectoryPath))
-                            return;
-                        listBoxModuleOrder.Items.Add(_selectedModule);
-                        _moduleObjects.Add(folderOut);
-                    }
+                    _host.Services.GetRequiredService<FolderPicker>().Show();
                     break;
                 case ModuleEnum.ModulesEnum.Encrypt:
-                    EncryptionService encryptionService = new EncryptionService(_host.Services.GetRequiredService<Encryption>());
-                    encryptionService.GetCryptoObject();
-
+                    _host.Services.GetRequiredService<Encryption>().Show();
                     break;
                 case ModuleEnum.ModulesEnum.Decrypt:
-                    
+                    _host.Services.GetRequiredService<Encryption>().Show();
                     break;
                 case ModuleEnum.ModulesEnum.MailOut:
-                    
+                    _host.Services.GetRequiredService<MailCompose>().Show();
                     break;
                 case ModuleEnum.ModulesEnum.TextReplace:
-                    
+                    _host.Services.GetRequiredService<TextReplace>().Show();
                     break;
                 case ModuleEnum.ModulesEnum.TextToPdf:
-                    
+                    _host.Services.GetRequiredService<ConvertComposer>().Show();
                     break;
                 case ModuleEnum.ModulesEnum.WordTemplate:
-
                     break;
                 default:
                     throw new ArgumentNullException("No module was selected. Please select one before you try to add it.");
