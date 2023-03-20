@@ -7,7 +7,7 @@ namespace WPF_MiniForms_CSharp.FolderModule;
 public partial class FolderPicker : Window
 {
     private Folder _folder;
-    private readonly FolderService _service;
+    public FolderService _service;
     public FolderPicker(FolderService service)
     {
         InitializeComponent();

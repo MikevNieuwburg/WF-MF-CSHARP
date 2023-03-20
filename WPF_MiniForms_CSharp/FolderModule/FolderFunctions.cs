@@ -7,6 +7,8 @@ namespace WPF_MiniForms_CSharp.Models.Functions
 {
     public class FolderFunctions
     {
+        private FolderDialogFunction _dialogFunctions;
+
         public Folder GetFolderInformation(string inputDirectory)
         {
             if (Directory.Exists(inputDirectory) == false)
@@ -34,13 +36,13 @@ namespace WPF_MiniForms_CSharp.Models.Functions
         }
 
 
-        public Folder GetFolder()
+        public Folder GetFolder(FolderDialogFunction dialogFunction)
         {
-            FolderDialogFunction function = new FolderDialogFunction();
+            _dialogFunctions = dialogFunction;
 
-            var path = function.FolderPath();
-            var files = function.FolderFiles(path);
-            var directories = function.FolderDirectories(path);
+            var path = _dialogFunctions.FolderPath();
+            var files = _dialogFunctions.FolderFiles(path);
+            var directories = _dialogFunctions.FolderDirectories(path);
             var dictionary = new Dictionary<string, IEnumerable<string>>();
             var tempFolder = GetTemporaryDirectory();
 
@@ -49,7 +51,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions
                 for (int i = 0; i < directories.Count(); i++)
                 {
                     var dir = directories.ToArray()[i];
-                    var contentFromDir = function.FolderFiles(dir + '\\');
+                    var contentFromDir = _dialogFunctions.FolderFiles(dir + '\\');
                     if(contentFromDir != null)
                         dictionary.Add(dir, contentFromDir);
 

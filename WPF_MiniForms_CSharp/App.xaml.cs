@@ -6,8 +6,6 @@ using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.FolderModule;
 using WPF_MiniForms_CSharp.MailModule;
-using WPF_MiniForms_CSharp.Models.Functions;
-using WPF_MiniForms_CSharp.Models.Modules;
 using WPF_MiniForms_CSharp.TextModule;
 
 namespace WPF_MiniForms_CSharp
@@ -17,9 +15,6 @@ namespace WPF_MiniForms_CSharp
         private readonly IHost _host;
        public App()
         {
-            //var b_host = Host.CreateApplicationBuilder();
-            //b_host.Services.AddScoped
-
             _host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
@@ -31,16 +26,18 @@ namespace WPF_MiniForms_CSharp
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<MainWindow>();
-            services.AddTransient<FolderService>();
-            services.AddTransient<FolderPicker>();
-            services.AddTransient<MailCompose>();
-            services.AddTransient<MailService>();
-            services.AddTransient<ConvertComposer>();
-            services.AddTransient<TextReplace>();
-            services.AddTransient<TextService>();
             services.AddTransient<Modules>();
 
-            // Setup encryption
+            // Setup folder functionality.
+            services.AddFolderModule();
+
+            // Setup mail functionality.
+            services.AddMailServices();
+
+            // Setup Text functionality.
+            services.AddTextModule();
+
+            // Setup encryption.
             services.AddEncryptionModule();
         }
 

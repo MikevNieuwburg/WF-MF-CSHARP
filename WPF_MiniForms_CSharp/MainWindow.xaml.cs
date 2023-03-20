@@ -4,12 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media.Media3D;
 using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.FolderModule;
 using WPF_MiniForms_CSharp.MailModule;
-using WPF_MiniForms_CSharp.Models.Functions;
 using WPF_MiniForms_CSharp.Models.Interfaces;
 using WPF_MiniForms_CSharp.TextModule;
 
@@ -58,30 +56,51 @@ namespace WPF_MiniForms_CSharp
                 case ModuleEnum.ModulesEnum.FolderOut:
                     var folderWindow = _host.Services.GetRequiredService<FolderPicker>();
                     if(folderWindow.ShowDialog() == true)
+                    {
                         listBoxModuleOrder.Items.Add(_selectedModule);
+                        _moduleObjects.Add(folderWindow._service);
+                    }
                     break;
                 case ModuleEnum.ModulesEnum.Encrypt:
                 case ModuleEnum.ModulesEnum.Decrypt:
                     var encryptionWindow = _host.Services.GetRequiredService<Encryption>();
-                    if(encryptionWindow.ShowDialog() == true)
+                    if (encryptionWindow.ShowDialog() == true)
+                    {
                         listBoxModuleOrder.Items.Add(_selectedModule);
+                    
+                    }
                     break;
                 case ModuleEnum.ModulesEnum.MailOut:
                     var mailWindow = _host.Services.GetRequiredService<MailCompose>();
                     if (mailWindow.ShowDialog() == true)
+                    {
                         listBoxModuleOrder.Items.Add(_selectedModule);
+                    
+                    }
                     break;
                 case ModuleEnum.ModulesEnum.TextReplace:
                     var replaceWindow = _host.Services.GetRequiredService<TextReplace>();
                     if (replaceWindow.ShowDialog() == true)
+                    {
                         listBoxModuleOrder.Items.Add(_selectedModule);
+                    
+                    }
                     break;
                 case ModuleEnum.ModulesEnum.TextToPdf:
                     var convertWindow = _host.Services.GetRequiredService<ConvertComposer>();
                     if (convertWindow.ShowDialog() == true)
+                    {
                         listBoxModuleOrder.Items.Add(_selectedModule);
+
+                    }
                     break;
                 case ModuleEnum.ModulesEnum.WordTemplate:
+                    var wordWindow = _host.Services.GetRequiredService<WordTemplate>();
+                    if(wordWindow.ShowDialog() == true)
+                    {
+                        listBoxModuleOrder.Items.Add(_selectedModule);
+
+                    }
                     break;
                 default:
                     throw new ArgumentNullException("No module was selected. Please select one before you try to add it.");

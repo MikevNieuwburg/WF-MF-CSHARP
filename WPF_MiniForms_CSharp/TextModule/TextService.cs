@@ -7,7 +7,7 @@ using WPF_MiniForms_CSharp.Models.Interfaces;
 
 namespace WPF_MiniForms_CSharp.TextModule;
 
-internal class TextService : IService
+public class TextService : IService
 {
     private readonly TextSettings _textObject;
 

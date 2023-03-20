@@ -6,14 +6,17 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
+using WPF_MiniForms_CSharp.Models.Interfaces;
 using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.Models.Functions;
 
-public class MailService
+public class MailService : IService
 {
     private const string ERROR = "Error on the following item(s):";
     private readonly ComposeMail _mail;
+    public object TaskInput { get; set; }
+    public object? TaskResult { get; set; }
 
     public MailService(ComposeMail mail)
     {

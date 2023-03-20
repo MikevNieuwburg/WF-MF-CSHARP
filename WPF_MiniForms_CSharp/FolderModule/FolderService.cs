@@ -9,21 +9,13 @@ using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.Models.Modules
 {
-    public class FolderService : IService 
+    public class FolderService : IService
     {
 
         #region Interface implementation
         
-        public object? TaskResult 
-        { 
-            get; 
-            set; 
-        }
-        public object TaskInput 
-        { 
-            get; 
-            set; 
-        }
+        public object? TaskResult { get;  set; }
+        public object TaskInput { get; set; }
 
         public void Execute()
         {
@@ -31,14 +23,13 @@ namespace WPF_MiniForms_CSharp.Models.Modules
         }
 
         #endregion
-        private FolderFunctions FolderFunctions;
-        public FolderService() 
+        private FolderFunctions _folderFunctions;
+        public FolderService(FolderFunctions folder)
         {
-            FolderFunctions = new FolderFunctions();
-            
+            _folderFunctions = folder;
         }
 
-        public Folder GetFolder() => FolderFunctions.GetFolder();
+        public Folder GetFolder() => _folderFunctions.GetFolder();
 
     }
 }
