@@ -25,8 +25,12 @@ public partial class ConvertComposer : Window
             return;
         }
 
-        Service!.TaskInput = new PDFConversion(comboFrom, comboTo);
-        Window = new ConvertWindow(comboFrom, comboTo);
+        if (comboFrom != null)
+        {
+            Service!.TaskInput = new PDFConversion(comboFrom, comboTo);
+            Window = new ConvertWindow(comboFrom, comboTo);
+        }
+
         DialogResult = true;
     }
 }

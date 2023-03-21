@@ -18,11 +18,11 @@ public class FolderFunctions
 
     public string GetTemporaryFolder => _tempFolder.GetTemporaryDirectory();
 
-    public string FolderPath(string title = "")
+    public string? FolderPath(string title = "")
     {
         using var dialog = new FolderBrowserDialog
         {
-            Description = title == string.Empty ? FOLDER_TITLE : title,
+            Description = (title?.Length == 0 ? FOLDER_TITLE : title) ?? string.Empty,
             UseDescriptionForTitle = true,
             SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             ShowNewFolderButton = true
@@ -43,7 +43,7 @@ public class FolderFunctions
 
         try
         {
-            return Directory.EnumerateFiles(Path.GetDirectoryName(path));
+            return Directory.EnumerateFiles(Path.GetDirectoryName(path) ?? string.Empty);
         }
         catch (Exception ex)
         {
@@ -57,8 +57,6 @@ public class FolderFunctions
         using var ofd = new OpenFileDialog();
         ofd.Filter = filter;
         var result = ofd.ShowDialog();
-
-
         if (result == DialogResult.OK) return ofd.FileName;
         throw new FileNotFoundException("File not found.");
     }

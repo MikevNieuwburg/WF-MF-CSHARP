@@ -14,7 +14,7 @@ public class FolderService : IService
     #region Interface implementation
 
     public object? TaskResult { get; set; }
-    public object TaskInput { get; set; }
+    public object? TaskInput { get; set; }
     internal ModuleEnum.ModulesEnum Module { get; set; }
 
     public FolderService(FolderFunctions functions)
@@ -32,6 +32,7 @@ public class FolderService : IService
         if (Module == ModuleEnum.ModulesEnum.FolderIn)
         {
             foreach (var item in _functions.FolderFiles(path))
+            {
                 try
                 {
                     var filename = item.Split('\\').Last();
@@ -43,13 +44,11 @@ public class FolderService : IService
                 {
                     throw new Exception(e.Message);
                 }
+            }
 
             return;
         }
-
         var tempFolder = _functions.GetTemporaryFolder;
-
-
         if (Directory.Exists(path) == false)
             throw new DirectoryNotFoundException(path);
 

@@ -22,19 +22,18 @@ public partial class Encryption : Window
         saltField.Text = window?.Salt;
     }
 
-
     private void EncodeObject(object sender, RoutedEventArgs e)
     {
-        var Encrypt = true;
-        CryptoObject = new EncodeRecord(Encrypt, passwordField.Text, saltField.Text);
+        const bool encrypt = true;
+        CryptoObject = new EncodeRecord(encrypt, passwordField.Text, saltField.Text);
         Window = new EncryptionWindowObject(passwordField.Text, saltField.Text);
         DialogResult = true;
     }
 
     private void DecodeObject(object sender, RoutedEventArgs e)
     {
-        var Encrypt = false;
-        CryptoObject = new EncodeRecord(Encrypt, passwordField.Text, saltField.Text);
+        const bool encrypt = false;
+        CryptoObject = new EncodeRecord(encrypt, passwordField.Text, saltField.Text);
         Window = new EncryptionWindowObject(passwordField.Text, saltField.Text);
         DialogResult = true;
     }

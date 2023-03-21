@@ -1,6 +1,6 @@
 ﻿namespace WPF_MiniForms_CSharp.Core;
 
-internal class ModuleEnum
+public static class ModuleEnum
 {
     public enum ModulesEnum
     {

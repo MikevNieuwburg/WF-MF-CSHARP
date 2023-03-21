@@ -7,7 +7,7 @@ namespace WPF_MiniForms_CSharp.MailModule;
 public partial class MailCompose : Window
 {
     public MailService Service;
-    public MailWindow Window;
+    public MailWindow? Window;
 
     public MailCompose(MailService service)
     {
@@ -16,9 +16,9 @@ public partial class MailCompose : Window
         ReopenWindow(Window);
     }
 
-    public ComposeMail Mail { get; set; }
+    public ComposeMail? Mail { get; set; }
 
-    private void ReopenWindow(MailWindow window)
+    private void ReopenWindow(MailWindow? window)
     {
         receiver.Text = window?.Receiver;
         carboncopy.Text = window?.CC;

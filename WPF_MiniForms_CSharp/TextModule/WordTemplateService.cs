@@ -8,10 +8,10 @@ namespace WPF_MiniForms_CSharp.TextModule;
 
 public class WordTemplateService : IService
 {
-    public string Output { get; set; }
-    public string OutputName { get; set; }
-    public string Template { get; set; }
-    public object TaskInput { get; set; }
+    public string? Output { get; set; }
+    public string? OutputName { get; set; }
+    public string? Template { get; set; }
+    public object? TaskInput { get; set; }
     public object? TaskResult { get; set; }
 
 
@@ -21,44 +21,46 @@ public class WordTemplateService : IService
     /// </summary>
     public void Execute()
     {
+        var input = "";
         if (TaskInput is string inputPath)
-        {
-            object missing = Missing.Value;
-            Application wordApp = new ApplicationClass();
-            Document aDoc = null;
-            object readOnly = false;
-            object isVisible = false;
+            input = inputPath;
+        if (string.IsNullOrEmpty(input))
+            return;
 
-            wordApp.Visible = false;
-            var file = inputPath.Split('/').Last();
-            if (string.IsNullOrEmpty(OutputName) == false)
-                file = OutputName;
-            object filename = inputPath;
-            object saveAs = Output + file;
-            object oTemplate = Template;
+        object missing = Missing.Value;
+        Application wordApp = new ApplicationClass();
+        object readOnly = false;
+        object isVisible = false;
 
-            aDoc = wordApp.Documents.Add(ref oTemplate, ref missing,
-                ref missing, ref missing);
+        wordApp.Visible = false;
+        var file = input.Split('/').Last();
+        if (string.IsNullOrEmpty(OutputName) == false)
+            file = OutputName;
+        object filename = input;
+        object saveAs = Output + file;
+        object? oTemplate = Template;
 
-            aDoc = wordApp.Documents.Open(ref filename, ref missing,
-                ref readOnly, ref missing, ref missing,
-                ref missing, ref missing, ref missing,
-                ref missing, ref missing, ref missing,
-                ref isVisible, ref missing, ref missing,
-                ref missing, ref missing);
+        var aDoc = wordApp.Documents.Add(ref oTemplate, ref missing,
+            ref missing, ref missing);
 
-            aDoc.Activate();
-            aDoc.set_AttachedTemplate(oTemplate);
-            aDoc.UpdateStyles();
+        aDoc = wordApp.Documents.Open(ref filename, ref missing,
+            ref readOnly, ref missing, ref missing,
+            ref missing, ref missing, ref missing,
+            ref missing, ref missing, ref missing,
+            ref isVisible, ref missing, ref missing,
+            ref missing, ref missing);
 
-            aDoc.SaveAs(ref saveAs, ref missing, ref missing,
-                ref missing, ref missing, ref missing,
-                ref missing, ref missing, ref missing,
-                ref missing, ref missing, ref missing, ref missing);
+        aDoc.Activate();
+        aDoc.set_AttachedTemplate(oTemplate);
+        aDoc.UpdateStyles();
 
-            aDoc.Close(ref missing, ref missing, ref missing);
-            Marshal.ReleaseComObject(aDoc);
-            Marshal.ReleaseComObject(wordApp);
-        }
+        aDoc.SaveAs(ref saveAs, ref missing, ref missing,
+            ref missing, ref missing, ref missing,
+            ref missing, ref missing, ref missing,
+            ref missing, ref missing, ref missing, ref missing);
+
+        aDoc.Close(ref missing, ref missing, ref missing);
+        Marshal.ReleaseComObject(aDoc);
+        Marshal.ReleaseComObject(wordApp);
     }
 }

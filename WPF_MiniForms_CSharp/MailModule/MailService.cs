@@ -14,9 +14,9 @@ public partial class MailService : IService
 {
     private const string ERROR = "Error on the following item(s):";
     private const string SMPT_SERVICE = "smtp.gmail.com";
-    private ComposeMail _mail;
+    private ComposeMail? _mail;
 
-    public object TaskInput { get; set; }
+    public object? TaskInput { get; set; }
     public object? TaskResult { get; set; }
 
     public void Execute()
@@ -30,23 +30,22 @@ public partial class MailService : IService
         if (TaskInput is ComposeMail mail)
             _mail = mail;
 
-        if (string.IsNullOrEmpty(_mail.Receivers))
+        if (string.IsNullOrEmpty(_mail?.Receivers))
             throw new Exception(ERROR + " receiver wasn't filled in as a valid email.");
-
-
-        if (ValidateRegex(_mail.Receivers, "Receiver") == false)
+        
+        if (ValidateRegex(_mail.Receivers) == false)
             throw new Exception(ERROR + " receiver wasn't filled in as a valid email.");
-        if (ValidateRegex(_mail.CarbonCopy, "Carbon Copy") == false)
+        if (ValidateRegex(_mail.CarbonCopy) == false)
             throw new Exception(ERROR + " cc isn't valid.");
-        if (ValidateRegex(_mail.BlindCarbonCopy, "Blind Carbon Copy") == false)
+        if (ValidateRegex(_mail.BlindCarbonCopy) == false)
             throw new Exception(ERROR + " bcc isn't valid.");
 
         return true;
     }
 
-    private bool ValidateRegex(string list, string? property = null)
+    private bool ValidateRegex(string list)
     {
-        if (list == "")
+        if (list.Length > 0)
             return true;
         var input = list.Contains(';') ? list.Split(';') : new[] { list };
         if (input.ToList() == new List<string>())
@@ -56,7 +55,7 @@ public partial class MailService : IService
 
     private void SendMail()
     {
-        if (_mail.Receivers == null)
+        if (_mail?.Receivers == null)
             return;
 
         var receivers = _mail.Receivers.Contains(';')
@@ -78,13 +77,22 @@ public partial class MailService : IService
 
         if (receivers.Any())
             foreach (var receiver in receivers)
+            {
                 message.To.Add(new MailAddress(receiver));
-        if (carbonCopy.Any() && carbonCopy.First() != string.Empty)
+            }
+
+        if (carbonCopy.Any() && carbonCopy[0] != string.Empty)
             foreach (var cc in carbonCopy)
+            {
                 message.CC.Add(new MailAddress(cc));
-        if (blindCarbonCopy.Any() && blindCarbonCopy.First() != string.Empty)
+            }
+
+        if (blindCarbonCopy.Any() && blindCarbonCopy[0] != string.Empty)
             foreach (var bcc in blindCarbonCopy)
+            {
                 message.Bcc.Add(new MailAddress(bcc));
+            }
+
         message.From = new MailAddress(settings.Default.EMAIL);
 
         var smtp = new SmtpClient();

@@ -18,7 +18,7 @@ public partial class FolderPicker : Window
         DataContext = this;
     }
 
-    public string GivenPath { get; set; }
+    public string? GivenPath { get; set; }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {

@@ -19,7 +19,7 @@ public partial class MainWindow : Window
     private readonly IHost _host;
     private readonly List<string> _moduleNames = new();
     private readonly List<IService> _modules = new();
-    private readonly List<object> _windows = new();
+    private readonly List<object?> _windows = new();
     private int _lastSelectedModule;
     private ModuleEnum.ModulesEnum _moduleEnum;
     private ModuleEnum.ModulesEnum _orderModule;
@@ -30,8 +30,13 @@ public partial class MainWindow : Window
         InitializeComponent();
         _host = host;
         foreach (var module in Enum.GetValues(typeof(ModuleEnum.ModulesEnum)))
-            _moduleNames.Add(string.Concat(module.ToString()!.Select(s => char.IsUpper(s) ? " " + s : s.ToString()))
-                .TrimStart(' '));
+        {
+            if (_moduleNames! != null)
+            {
+                _moduleNames.Add(string.Concat(module.ToString()!.Select(s => char.IsUpper(s) ? " " + s : s.ToString()))
+                    .TrimStart(' '));
+            }
+        }
 
         listBoxModules.ItemsSource = _moduleNames;
         listBoxModules.SelectionChanged += ListBoxModules_SelectionChanged;
@@ -65,7 +70,7 @@ public partial class MainWindow : Window
         OpenModule(_moduleEnum);
     }
 
-    private void OpenModule(ModuleEnum.ModulesEnum moduleEnum, object passWindow = null)
+    private void OpenModule(ModuleEnum.ModulesEnum moduleEnum, object? passWindow = null)
     {
         switch (moduleEnum)
         {
@@ -105,9 +110,10 @@ public partial class MainWindow : Window
                 if (encryptionWindow.ShowDialog() == true)
                 {
                     listBoxModuleOrder.Items.Add(_selectedModule);
-                    encryptionWindow.Service.TaskInput = encryptionWindow.CryptoObject;
-                    _modules.Add(encryptionWindow.Service);
-                    _windows.Add(encryptionWindow.Window);
+                    if (encryptionWindow is { CryptoObject: { }, Service: { } })
+                        encryptionWindow.Service.TaskInput = encryptionWindow.CryptoObject;
+                    _modules.Add(encryptionWindow!.Service);
+                    _windows.Add(encryptionWindow!.Window);
                 }
 
                 break;
@@ -167,7 +173,7 @@ public partial class MainWindow : Window
 
                 break;
             default:
-                throw new ArgumentNullException("No module was selected. Please select one before you try to add it.");
+                throw new ArgumentNullException(nameof(moduleEnum));
         }
     }
 
@@ -210,7 +216,6 @@ public partial class MainWindow : Window
             ModuleEnum.ModulesEnum parsedValue)
             _orderModule = parsedValue;
 
-        if (_orderModule != null)
-            OpenModule(_orderModule, _windows[listBoxModuleOrder.SelectedIndex]);
+        OpenModule(_orderModule, _windows[listBoxModuleOrder.SelectedIndex]);
     }
 }

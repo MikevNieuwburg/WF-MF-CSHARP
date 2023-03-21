@@ -16,8 +16,8 @@ public class TextService : IService
 {
     private readonly TemporaryFolder _folder;
     private readonly FolderFunctions _functions;
-    private PDFConversion _pdfConversion;
-    private TextSettings _textSetting;
+    private PDFConversion? _pdfConversion;
+    private TextSettings? _textSetting;
 
     public TextService(TemporaryFolder folder, FolderFunctions folderFunctions)
     {
@@ -26,7 +26,7 @@ public class TextService : IService
     }
 
     public bool ToPdf { get; set; }
-    public object TaskInput { get; set; }
+    public object? TaskInput { get; set; }
     public object? TaskResult { get; set; }
 
     public void Execute()
@@ -46,7 +46,7 @@ public class TextService : IService
 
     public void TextToPdf(string filePath)
     {
-        if (filePath.Split('.').Last() != _pdfConversion.ConvertFrom.ToLower())
+        if (filePath.Split('.').Last() != _pdfConversion?.ConvertFrom.ToLower())
             return;
         var lines = File.ReadAllLines(filePath);
 
@@ -82,7 +82,7 @@ public class TextService : IService
     {
         folderContent.ForEach(item =>
         {
-            if (item.EndsWith(_pdfConversion.ConvertFrom.ToLower()))
+            if (item.EndsWith(_pdfConversion?.ConvertFrom.ToLower() ?? string.Empty))
                 TextToPdf(item);
         });
     }
@@ -91,8 +91,13 @@ public class TextService : IService
     {
         var lines = File.ReadAllLines(filePath);
         for (var i = 0; i < lines.Length; i++)
-            if (lines[i].Contains(_textSetting.ReplaceFrom))
+        {
+            if (lines[i].Contains(_textSetting?.ReplaceFrom ?? string.Empty) && _textSetting?.ReplaceFrom != null)
+            {
                 lines[i] = lines[i].Replace(_textSetting.ReplaceFrom, _textSetting.ReplaceWith);
+            }
+        }
+
         File.WriteAllLines(filePath, lines);
     }
 
