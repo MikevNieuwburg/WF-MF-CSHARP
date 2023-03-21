@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace WPF_MiniForms_CSharp.Models.Interfaces
+﻿namespace WPF_MiniForms_CSharp.Models.Interfaces
 {
     public interface IService
     {
-        
+
         /// <summary>
         /// This is the execute functionality which will return a boolean whether it has completed successfully or not.
         /// </summary>

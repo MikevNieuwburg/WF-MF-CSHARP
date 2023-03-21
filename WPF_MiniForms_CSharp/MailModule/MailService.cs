@@ -14,34 +14,39 @@ namespace WPF_MiniForms_CSharp.Models.Functions;
 public class MailService : IService
 {
     private const string ERROR = "Error on the following item(s):";
-    private readonly ComposeMail _mail;
+    private ComposeMail _mail;
+
     public object TaskInput { get; set; }
     public object? TaskResult { get; set; }
 
-    public MailService(ComposeMail mail)
-    {
-        _mail = mail;
-    }
-
-
     private bool ValidateMailProperties()
     {
-        if (ValidateRegex(_mail.Receivers.ToList(), "Receiver") == false ||
-            ValidateRegex(_mail.CarbonCopy.ToList(), "Carbon Copy") == false ||
-            ValidateRegex(_mail.BlindCarbonCopy.ToList(), "Blind Carbon Copy") == false)
-        {
-            Debug.WriteLine(ERROR);
-            return false;
-        }
+        if (TaskInput is ComposeMail mail)
+            _mail = mail;
+
+        if (string.IsNullOrEmpty(_mail.Receivers))
+            throw new Exception(ERROR + " receiver wasn't filled in as a valid email.");
+
+
+        if (ValidateRegex(_mail.Receivers, "Receiver") == false)
+            throw new Exception(ERROR + " receiver wasn't filled in as a valid email.");
+        if (ValidateRegex(_mail.CarbonCopy, "Carbon Copy") == false)
+            throw new Exception(ERROR + " cc isn't valid.");
+        if (ValidateRegex(_mail.BlindCarbonCopy, "Blind Carbon Copy") == false)
+            throw new Exception(ERROR + " bcc isn't valid.");
+
         return true;
     }
 
-    private bool ValidateRegex(List<string>? list, string? property = null)
+    private bool ValidateRegex(string list, string? property = null)
     {
+        if (list == "")
+            return true;
+        var input = (list.Contains(';')) ? list.Split(';') : new string[] { list };
         string mailPattern = "^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*$";
-        if (list == new List<string>())
+        if (input.ToList() == new List<string>())
             ArgumentException.ThrowIfNullOrEmpty(nameof(list));
-        if (list.Any(x => !Regex.IsMatch(x, mailPattern)))
+        if (input.ToList().Any(x => !Regex.IsMatch(x, mailPattern)))
             return false;
         return true;
     }
@@ -51,6 +56,10 @@ public class MailService : IService
         if (_mail.Receivers == null)
             return;
 
+        var receivers = _mail.Receivers.Contains(';') ? _mail.Receivers.Split(';').ToList() : new List<string> { _mail.Receivers };
+        var carbonCopy = _mail.CarbonCopy.Contains(';') ? _mail.CarbonCopy.Split(';').ToList() : new List<string> { _mail.CarbonCopy };
+        var blindCarbonCopy = _mail.BlindCarbonCopy.Contains(';') ? _mail.BlindCarbonCopy.Split(';').ToList() : new List<string> { _mail.BlindCarbonCopy };
+
         MailMessage message = new()
         {
             Subject = _mail.Header,
@@ -58,37 +67,39 @@ public class MailService : IService
             BodyEncoding = Encoding.UTF8
         };
 
-        if (_mail.Receivers.Any())
+        if (receivers.Any())
         {
-            foreach (var receiver in _mail.Receivers)
+            foreach (var receiver in receivers)
             {
                 message.To.Add(new MailAddress(receiver));
             }
         }
-        if (_mail.CarbonCopy.Any())
+        if (carbonCopy.Any() && carbonCopy.First() != string.Empty)
         {
-            foreach (var carbonCopy in _mail.CarbonCopy)
+            foreach (var cc in carbonCopy)
             {
-                message.CC.Add(new MailAddress(carbonCopy));
+                message.CC.Add(new MailAddress(cc));
             }
         }
-        if (_mail.BlindCarbonCopy.Any())
+        if (blindCarbonCopy.Any() && blindCarbonCopy.First() != string.Empty)
         {
-            foreach (var blindCarbonCopy in _mail.BlindCarbonCopy)
+            foreach (var bcc in blindCarbonCopy)
             {
-                message.Bcc.Add(new MailAddress(blindCarbonCopy));
+                message.Bcc.Add(new MailAddress(bcc));
             }
         }
+        message.From = new MailAddress("random.guids@gmail.com");
 
-        using SmtpClient smtp = new();
-        
-        smtp.UseDefaultCredentials = true;
+        using SmtpClient smtp = new SmtpClient();
+
         smtp.Host = "smtp.gmail.com";
         smtp.Port = 587;
-        smtp.Credentials = new NetworkCredential("random.guids@gmail.com", "roysoxyhodtbycwu");
-        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
         smtp.EnableSsl = true;
-        smtp.Timeout = 20000;
+        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+        smtp.UseDefaultCredentials = false;
+        smtp.Credentials = new NetworkCredential("random.guids@gmail.com", "roysoxyhodtbycwu");
+
+
 
         try
         {
@@ -98,7 +109,7 @@ public class MailService : IService
         {
             Debug.WriteLine(ex.ToString());
         }
-        
+
     }
     public void Execute()
     {

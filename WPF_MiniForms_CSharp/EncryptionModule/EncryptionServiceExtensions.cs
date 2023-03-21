@@ -8,10 +8,10 @@ namespace WPF_MiniForms_CSharp.EncryptionModule
     {
         public static IServiceCollection AddEncryptionModule(this IServiceCollection services)
         {
-            services.AddTransient<IEncryption, AesEncryption>();
+            services.AddTransient<Base64>();
             services.AddTransient<EncryptionService>();
             services.AddTransient<Encryption>();
-            services.AddTransient<CryptoObject>();
+            services.AddTransient<EncodeRecord>();
             return services;
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.Models.Functions;
 using WPF_MiniForms_CSharp.Models.Helper;
 using WPF_MiniForms_CSharp.Models.Modules;
@@ -12,7 +11,6 @@ namespace WPF_MiniForms_CSharp.FolderModule
         {
             services.AddTransient<FolderService>();
             services.AddTransient<FolderPicker>();
-            services.AddTransient<FolderDialogFunction>();
             services.AddTransient<FolderFunctions>();
             services.AddTransient<FileContentHelper>();
             return services;

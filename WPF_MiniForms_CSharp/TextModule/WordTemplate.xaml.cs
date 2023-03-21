@@ -1,27 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using WPF_MiniForms_CSharp.Models.Functions;
 
-namespace WPF_MiniForms_CSharp.TextModule
+namespace WPF_MiniForms_CSharp.TextModule;
+
+/// <summary>
+/// Interaction logic for WordTemplate.xaml
+/// </summary>
+public partial class WordTemplate : Window
 {
-    /// <summary>
-    /// Interaction logic for WordTemplate.xaml
-    /// </summary>
-    public partial class WordTemplate : Window
+
+    private FolderFunctions _folder;
+
+    public WordTemplateService Service { get; private set; }
+
+    public string TemplateFile { get; set; }
+
+    public WordTemplate(WordTemplateService templateService, FolderFunctions folder)
     {
-        public WordTemplate()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        _folder = folder;
+        Service = templateService;
+        if (string.IsNullOrEmpty(TemplateFile) == false)
+            templateTb.Text = TemplateFile;
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        templateTb.Text = _folder.GetFile("Word Template (*.dotx)|*.dotx|Word Template <2007(*.dot)|*.dot");
+        Service.Template = templateTb.Text;
+    }
+
+    private void Button_Click_2(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(templateTb.Text) == false)
+            Service.OutputName = templateTb.Text;
+        DialogResult = true;
     }
 }

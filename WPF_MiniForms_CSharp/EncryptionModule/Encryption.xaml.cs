@@ -1,33 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using WPF_MiniForms_CSharp.Core;
+using WPF_MiniForms_CSharp.Models.Functions;
 
-namespace WPF_MiniForms_CSharp.EncryptionModule
+namespace WPF_MiniForms_CSharp.EncryptionModule;
+
+public partial class Encryption : Window
 {
-    /// <summary>
-    /// Interaction logic for Encryption.xaml
-    /// </summary>
-    public partial class Encryption : Window
+    public EncodeRecord CryptoObject;
+    public EncryptionService Service;
+    public EncryptionWindowObject Window;
+
+    public Encryption(EncryptionService service)
     {
-        private CryptoObject _encryption;
+        InitializeComponent();
+        ResetWindow(Window);
+        Service = service;
+    }
 
-        public Encryption(CryptoObject encryption)
-        {
-            InitializeComponent();
+    private void ResetWindow(EncryptionWindowObject window)
+    {
+        passwordField.Text = window?.Password;
+        saltField.Text = window?.Salt;
+    }
 
-            _encryption = encryption;
-        }
 
-        public CryptoObject GetEncryptionObject => _encryption;
+    private void EncodeObject(object sender, RoutedEventArgs e)
+    {
+        bool Encrypt = true;
+        CryptoObject = new EncodeRecord(Encrypt, passwordField.Text, saltField.Text);
+        Window = new EncryptionWindowObject(passwordField.Text, saltField.Text);
+        DialogResult = true;
+    }
+
+    private void DecodeObject(object sender, RoutedEventArgs e)
+    {
+        bool Encrypt = false;
+        CryptoObject = new EncodeRecord(Encrypt, passwordField.Text, saltField.Text);
+        Window = new EncryptionWindowObject(passwordField.Text, saltField.Text);
+        DialogResult = true;
     }
 }

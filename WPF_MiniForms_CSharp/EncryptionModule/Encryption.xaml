@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_MiniForms_CSharp.EncryptionModule"
         mc:Ignorable="d"
-        Title="Encryption Module" Height="400" Width="800" ResizeMode="NoResize">
+        Title="Encryption Module" Height="290" Width="748" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,26 +14,20 @@
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel Margin="15,15,15,15" VerticalAlignment="Top">
-        <Grid Margin="5">
-            <Label Content="Input path" HorizontalAlignment="Left" Style="{StaticResource headerBoldLabel}"/>
-        </Grid>
-        <StackPanel Orientation="Horizontal">
-            <TextBox Style="{StaticResource folderTextBox}" Width="680"/>
-            <Button Content="Pick folder" Width="70" Height="30" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
-        </StackPanel>
-        <Grid Margin="5">
-            <Label Content="Output path" HorizontalAlignment="Left" Style="{StaticResource headerBoldLabel}"/>
-        </Grid>
-        <StackPanel Orientation="Horizontal">
-            <TextBox Style="{StaticResource folderTextBox}" Width="680"/>
-            <Button Content="Pick folder" Width="70" Height="30" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
-        </StackPanel>
+        <Grid Margin="5"/>
+        <StackPanel Orientation="Horizontal"/>
+        <Grid Margin="5"/>
+        <StackPanel Orientation="Horizontal"/>
         <StackPanel HorizontalAlignment="Left">
             <Label Content="Password" Style="{StaticResource headerBoldLabel}"/>
-            <TextBox Style="{StaticResource folderTextBox}" Width="680"/>
+            <TextBox x:Name="passwordField" Style="{StaticResource folderTextBox}" Width="680"/>
             <Label Content="Salt" Style="{StaticResource headerBoldLabel}"/>
-            <TextBox Style="{StaticResource folderTextBox}" Width="680"/>
+            <TextBox x:Name="saltField" Style="{StaticResource folderTextBox}" Width="680"/>
         </StackPanel>
-        <Button Style="{StaticResource bigButton}" Content="SET OBJECT" Margin="15"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="encodeButton" Style="{StaticResource bigButton}" Content="Encode" Margin="15" Click="EncodeObject"/>
+            <Button x:Name="decodeButton" Style="{StaticResource bigButton}" Content="Decode" Margin="15" Click="DecodeObject"/>
+        </StackPanel>
+
     </StackPanel>
 </Window>

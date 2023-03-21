@@ -19,12 +19,12 @@
             <StackPanel Width="380" Margin="5, 0">
                 <Label Content="Label" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}"/>
                 <Label Content="Type whole word you want to be replaced." HorizontalAlignment="Center"/>
-                <TextBox Margin="10,0,10,0" TextChanged="leftSideChanged" Style="{StaticResource bigTextBox}"/>
+                <TextBox x:Name="changeFrom" Margin="10,0,10,0" Style="{StaticResource bigTextBox}"/>
             </StackPanel>
             <StackPanel Width="380" Margin="5, 0">
                 <Label Content="Label" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}"/>
                 <Label Content="This will be the word the other text will be replaced with." HorizontalAlignment="Center" ToolTip=""/>
-                <TextBox Margin="10,0,10,0" TextChanged="rightSideChanged" Style="{StaticResource bigTextBox}"/>
+                <TextBox x:Name="changeTo" Margin="10,0,10,0" Style="{StaticResource bigTextBox}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel x:Name="changePanel" HorizontalAlignment="Center" Style="{StaticResource stackHorizontal}">

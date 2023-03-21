@@ -1,40 +1,29 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace WPF_MiniForms_CSharp.TextModule;
 
 public partial class TextReplace : Window
 {
-    private bool hasChanged = false;
-    private TextService _service;
-
+    public TextService Service;
+    public TextReplaceWindow Window;
     public TextReplace(TextService service)
     {
         InitializeComponent();
-        _service = service;
-        changePanel.Visibility = Visibility.Hidden;
+        Service = service;
+        ResetWindow(Window);
     }
 
-    private void rightSideChanged(object sender, TextChangedEventArgs e)
+    private void ResetWindow(TextReplaceWindow window)
     {
-        changePanel.Visibility = Visibility.Visible;
-        rightLabelChange.Content = e.Source;
-    }
-
-    private void leftSideChanged(object sender, TextChangedEventArgs e)
-    {
-        changePanel.Visibility = Visibility.Visible;
-        leftLabelChange.Content = e.Source;
-        hasChanged = true;
+        changeFrom.Text = window?.From;
+        changeTo.Text = window?.To;
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        if(hasChanged)
-        {
-            _service.TaskResult = new TextSettings(leftLabelChange.Content.ToString(), rightLabelChange.Content.ToString());
-            DialogResult = true;
-            Close();
-        }
+        Service.TaskInput = new TextSettings(changeFrom.Text, changeTo.Text);
+        Window = new TextReplaceWindow(From: changeFrom.Text, To: changeTo.Text);
+        DialogResult = true;
+        Close();
     }
 }

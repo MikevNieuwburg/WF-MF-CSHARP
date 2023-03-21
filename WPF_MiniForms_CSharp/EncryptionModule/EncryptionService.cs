@@ -1,13 +1,14 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.IO;
 using WPF_MiniForms_CSharp.EncryptionModule;
+using WPF_MiniForms_CSharp.Models.Helper;
 using WPF_MiniForms_CSharp.Models.Interfaces;
 
 namespace WPF_MiniForms_CSharp.Models.Functions;
 
 public class EncryptionService : IService
 {
-    private Encryption _encryption;
+    private readonly Base64 _base;
+    private readonly FolderFunctions _folder;
 
     public object TaskInput
     {
@@ -20,59 +21,45 @@ public class EncryptionService : IService
         set;
     }
 
-    public EncryptionService(Encryption encryptionPage)
+    public EncryptionService(Base64 base64, FolderFunctions folderFunctions)
     {
-        _encryption = encryptionPage;
+        _base = base64;
+        _folder = folderFunctions;
     }
-
     private void EncodeFile()
     {
-        if (TaskInput == null)
-            throw new ArgumentNullException(nameof(TaskInput));
+        var obj = TaskInput as EncodeRecord;
 
-        if (TaskInput is CryptoObject encryption)
+        foreach (var item in _folder.FolderFiles(_folder.GetTemporaryFolder))
         {
-            switch (encryption.EncryptionType)
-            {
-                case EncryptionType.Standard:
-                    foreach (var file in encryption.Folder.FolderContent)
-                    {
-                        try
-                        {
-                            System.IO.File.Encrypt(file);
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine(ex);
-                            throw;
-                        }
-                        finally
-                        {
-                            Debug.WriteLine($"{file} encrypted using System.IO.File.Encrypt");
-                        }
-                    }
-                    break;
-                case EncryptionType.Aes:
-                    Encryption encryptionPage = new Encryption(encryption);
-                    encryptionPage.Show();
-                    break;
-                default:
-                    throw new ArgumentNullException("Please select a value before you try to set a value.");
-            }
+            var capture = _base.Encrypt(File.ReadAllText(item) + obj?.Password + obj?.Salt);
+            File.WriteAllText(item, capture);
+        }
+
+    }
+
+    private void DecodeFile()
+    {
+        var obj = TaskInput as EncodeRecord;
+
+        foreach (var item in _folder.FolderFiles(_folder.GetTemporaryFolder))
+        {
+            var capture = _base.Decrypt(File.ReadAllText(item));
+            File.WriteAllText(item, capture.Replace(obj?.Password + obj?.Salt, ""));
         }
     }
 
-    public void GetCryptoObject()
+    public void Execute()
     {
-        _encryption.Show();
-        _encryption.Closing += _encryption_Closing;
+        if (TaskInput is EncodeRecord crypto)
+        {
+            if (crypto.Encode)
+            {
+                EncodeFile();
+                return;
+            }
+            DecodeFile();
+        }
     }
-
-    private void _encryption_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
-    {
-        TaskResult = _encryption.GetEncryptionObject;
-    }
-
-    public void Execute() { EncodeFile(); }
 
 }

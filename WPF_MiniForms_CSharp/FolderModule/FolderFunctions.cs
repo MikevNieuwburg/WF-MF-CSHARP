@@ -1,71 +1,113 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using WPF_MiniForms_CSharp.Models.Records;
+using System.Windows.Forms;
+using WPF_MiniForms_CSharp.Core;
 
-namespace WPF_MiniForms_CSharp.Models.Functions
+namespace WPF_MiniForms_CSharp.Models.Functions;
+
+public class FolderFunctions
 {
-    public class FolderFunctions
+    private TemporaryFolder _tempFolder;
+
+    public FolderFunctions(TemporaryFolder tempFolder)
     {
-        private FolderDialogFunction _dialogFunctions;
+        _tempFolder = tempFolder;
+    }
 
-        public Folder GetFolderInformation(string inputDirectory)
+    public string GetTemporaryFolder => _tempFolder.GetTemporaryDirectory();
+
+    public IEnumerable<string>? Files()
+    {
+        var path = _tempFolder.GetTemporaryDirectory();
+        return FolderFiles(path);
+    }
+    public IEnumerable<string>? Directories()
+    {
+        var path = _tempFolder.GetTemporaryDirectory();
+        return FolderDirectories(path);
+    }
+
+    public Dictionary<string, IEnumerable<string>> GetFolder()
+    {
+
+        var path = _tempFolder.GetTemporaryDirectory();
+        var directories = FolderDirectories(path);
+        var dictionary = new Dictionary<string, IEnumerable<string>>();
+
+        if (directories?.Count() > 0)
         {
-            if (Directory.Exists(inputDirectory) == false)
+            for (int i = 0; i < directories.Count(); i++)
             {
-                throw new InvalidDataException("Folder does not exist.");
+                var dir = directories.ToArray()[i];
+                var contentFromDir = FolderFiles(dir + '\\');
+                if (contentFromDir != null)
+                    dictionary.Add(dir, contentFromDir);
+
             }
-            var enumeratedFiles = Directory.EnumerateFiles(inputDirectory);
-            var enumeratedFolders = Directory.EnumerateDirectories(inputDirectory);
-            var dictionary = new Dictionary<string, IEnumerable<string>>();
-            var tempDirectory = GetTemporaryDirectory();
-
-            if (enumeratedFolders.Any())
-            {
-                for (int i = 0; i < enumeratedFolders.Count(); i++)
-                {
-                    var dir = enumeratedFolders.ToArray()[i];
-                    var contentFromDir = Directory.EnumerateFiles(dir + '\\');
-                    if(contentFromDir.Count() > 0)
-                        dictionary.Add(dir, contentFromDir);
-                }
-            }
-
-            return new Folder(inputDirectory,tempDirectory, enumeratedFiles, enumeratedFolders, dictionary);
-
         }
+        return dictionary;
+    }
 
-
-        public Folder GetFolder(FolderDialogFunction dialogFunction)
+    public string FolderPath(string title = "")
+    {
+        using var dialog = new FolderBrowserDialog()
         {
-            _dialogFunctions = dialogFunction;
-
-            var path = _dialogFunctions.FolderPath();
-            var files = _dialogFunctions.FolderFiles(path);
-            var directories = _dialogFunctions.FolderDirectories(path);
-            var dictionary = new Dictionary<string, IEnumerable<string>>();
-            var tempFolder = GetTemporaryDirectory();
-
-            if (directories?.Count() > 0)
-            {
-                for (int i = 0; i < directories.Count(); i++)
-                {
-                    var dir = directories.ToArray()[i];
-                    var contentFromDir = _dialogFunctions.FolderFiles(dir + '\\');
-                    if(contentFromDir != null)
-                        dictionary.Add(dir, contentFromDir);
-
-                }
-            }
-            return new Folder(path, tempFolder, files, directories, dictionary);
-        }
-
-        private string GetTemporaryDirectory()
+            Description = (title == string.Empty) ? "Pick a folder" : title,
+            UseDescriptionForTitle = true,
+            SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+            ShowNewFolderButton = true
+        };
+        if (dialog.ShowDialog() == DialogResult.OK)
         {
-            var TempPath = $"{Path.GetTempPath()}AdvancedMiniForms\\";
-            if (Directory.Exists(TempPath ) == false)
-                Directory.CreateDirectory(TempPath);
-            return TempPath;
+            dialog.Dispose();
+            return dialog.SelectedPath + @"\";
         }
+        return string.Empty;
+    }
+
+    public IEnumerable<string>? FolderDirectories(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+            return null;
+
+        try
+        {
+            return Directory.EnumerateDirectories(Path.GetDirectoryName(path));
+        }
+        catch
+        {
+            throw new Exception("Either the argument passed failed to parse or the path is too long.");
+        }
+    }
+
+    public IEnumerable<string>? FolderFiles(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+            return null;
+
+        try
+        {
+            return Directory.EnumerateFiles(Path.GetDirectoryName(path));
+        }
+        catch
+        {
+            throw new Exception("Either the argument passed failed to parse or the path is too long.");
+        }
+    }
+
+    public string GetFile(string filter)
+    {
+        using OpenFileDialog ofd = new OpenFileDialog();
+        ofd.Filter = filter;
+        var result = ofd.ShowDialog();
+
+
+        if (result == DialogResult.OK)
+        {
+            return ofd.FileName;
+        }
+        throw new FileNotFoundException("File not found.");
     }
 }

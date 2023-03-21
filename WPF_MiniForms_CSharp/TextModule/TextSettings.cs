@@ -1,3 +1,3 @@
 ﻿namespace WPF_MiniForms_CSharp.TextModule;
 
-public record TextSettings(string Path, string ReplaceFrom, string ReplaceWith);
+public record TextSettings(string ReplaceFrom, string ReplaceWith);

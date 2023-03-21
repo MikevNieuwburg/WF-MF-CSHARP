@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="FolderPicker" Height="153" Width="661">
-    <Grid>
+<Grid>
         <StackPanel>
             <Grid>
                 <Grid.RowDefinitions>
@@ -28,7 +28,11 @@
                 <TextBox MaxLength="255" Grid.Row="1" Grid.ColumnSpan="2" Name="txtLimitedInput" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
                 <Button Content=" Select a folder " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Click="Button_Click"/>
             </Grid>
-            <Button Margin="35" Content="Select" Width="100" Height="30" Click="Button_Click_1"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Margin="35" Content="Select" Width="100" Height="30" Click="Button_Click_1"/>
+
+                <Button Margin="35" Content="Use Temp" Width="100" Height="30" Click="Button_Click_2"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
