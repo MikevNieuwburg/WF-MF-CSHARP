@@ -4,16 +4,11 @@ using WPF_MiniForms_CSharp.Models.Functions;
 namespace WPF_MiniForms_CSharp.TextModule;
 
 /// <summary>
-/// Interaction logic for WordTemplate.xaml
+///     Interaction logic for WordTemplate.xaml
 /// </summary>
 public partial class WordTemplate : Window
 {
-
-    private FolderFunctions _folder;
-
-    public WordTemplateService Service { get; private set; }
-
-    public string TemplateFile { get; set; }
+    private readonly FolderFunctions _folder;
 
     public WordTemplate(WordTemplateService templateService, FolderFunctions folder)
     {
@@ -23,6 +18,10 @@ public partial class WordTemplate : Window
         if (string.IsNullOrEmpty(TemplateFile) == false)
             templateTb.Text = TemplateFile;
     }
+
+    public WordTemplateService Service { get; }
+
+    public string TemplateFile { get; set; }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {

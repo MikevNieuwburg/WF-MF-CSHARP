@@ -12,6 +12,7 @@ public class FileContentHelper
     {
         _folderFunctions = folderFunctions;
     }
+
     public IEnumerable<string> GetFileContent(string filePath)
     {
         return File.ReadAllLines(filePath);

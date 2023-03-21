@@ -9,14 +9,30 @@ public class EncryptionService : IService
 {
     private readonly Base64 _base;
     private readonly FolderFunctions _folder;
-    public object TaskInput { get;set; }
-    public object? TaskResult { get;set; }
 
     public EncryptionService(Base64 base64, FolderFunctions folderFunctions)
     {
         _base = base64;
         _folder = folderFunctions;
     }
+
+    public object TaskInput { get; set; }
+    public object? TaskResult { get; set; }
+
+    public void Execute()
+    {
+        if (TaskInput is EncodeRecord crypto)
+        {
+            if (crypto.Encode)
+            {
+                EncodeFile();
+                return;
+            }
+
+            DecodeFile();
+        }
+    }
+
     private void EncodeFile()
     {
         var obj = TaskInput as EncodeRecord;
@@ -26,7 +42,6 @@ public class EncryptionService : IService
             var capture = _base.Encrypt(File.ReadAllText(item) + obj?.Password + obj?.Salt);
             File.WriteAllText(item, capture);
         }
-
     }
 
     private void DecodeFile()
@@ -39,18 +54,4 @@ public class EncryptionService : IService
             File.WriteAllText(item, capture.Replace(obj?.Password + obj?.Salt, ""));
         }
     }
-
-    public void Execute()
-    {
-        if (TaskInput is EncodeRecord crypto)
-        {
-            if (crypto.Encode)
-            {
-                EncodeFile();
-                return;
-            }
-            DecodeFile();
-        }
-    }
-
 }

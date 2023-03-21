@@ -1,27 +1,23 @@
-﻿using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using iText.Kernel.Pdf;
+using Microsoft.Office.Interop.Word;
 using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.Models.Functions;
 using WPF_MiniForms_CSharp.Models.Interfaces;
-using Word = Microsoft.Office.Interop.Word;
+using Document = iText.Layout.Document;
+using Paragraph = iText.Layout.Element.Paragraph;
 
 namespace WPF_MiniForms_CSharp.TextModule;
 
 public class TextService : IService
 {
-    private TextSettings _textSetting;
-    private PDFConversion _pdfConversion;
     private readonly TemporaryFolder _folder;
     private readonly FolderFunctions _functions;
-
-    public bool ToPDF { get; set; }
-    public object TaskInput { get; set; }
-    public object? TaskResult { get; set; }
+    private PDFConversion _pdfConversion;
+    private TextSettings _textSetting;
 
     public TextService(TemporaryFolder folder, FolderFunctions folderFunctions)
     {
@@ -29,89 +25,83 @@ public class TextService : IService
         _functions = folderFunctions;
     }
 
-    public void TextToPDF(string filePath)
+    public bool ToPdf { get; set; }
+    public object TaskInput { get; set; }
+    public object? TaskResult { get; set; }
+
+    public void Execute()
+    {
+        if (ToPdf)
+        {
+            if (TaskInput is PDFConversion conversion)
+                _pdfConversion = conversion;
+            TextToPdf(_functions.FolderFiles(_folder.GetTemporaryDirectory()).ToList());
+            return;
+        }
+
+        if (TaskInput is TextSettings settings)
+            _textSetting = settings;
+        TextReplace(_functions.FolderFiles(_folder.GetTemporaryDirectory()).ToList());
+    }
+
+    public void TextToPdf(string filePath)
     {
         if (filePath.Split('.').Last() != _pdfConversion.ConvertFrom.ToLower())
             return;
         var lines = File.ReadAllLines(filePath);
 
-        if (_pdfConversion.ConvertTo == "docx")
+        switch (_pdfConversion.ConvertTo)
         {
-            object oMissing = System.Reflection.Missing.Value;
-            Word.Application application = new Word.Application();
-            Word.Document wordDoc = application.Documents.Add(ref oMissing, ref oMissing, ref oMissing, ref oMissing);
-            foreach (var singleLine in lines)
+            case "docx":
             {
-                wordDoc.Content.InsertAfter(singleLine);
+                object oMissing = Missing.Value;
+                var application = new Application();
+                var wordDoc = application.Documents.Add(ref oMissing, ref oMissing, ref oMissing, ref oMissing);
+                foreach (var singleLine in lines) wordDoc.Content.InsertAfter(singleLine);
+                wordDoc.SaveAs2(filePath);
+                wordDoc.Close();
+                return;
             }
-            wordDoc.SaveAs2(filePath);
-            wordDoc.Close();
-            return;
-        }
-        if (_pdfConversion.ConvertTo == "txt")
-        {
-            using StreamWriter file = new(filePath);
-            foreach (var line in lines)
+            case "txt":
             {
-                file.WriteLine(line);
+                using StreamWriter file = new(filePath);
+                foreach (var line in lines) file.WriteLine(line);
+                return;
             }
-            return;
         }
 
-        using PdfDocument pdfDocument = new PdfDocument(new PdfWriter(new FileStream(filePath.Replace("txt", "pdf"), FileMode.Create, FileAccess.Write)));
-        using Document document = new Document(pdfDocument);
+        using var pdfDocument =
+            new PdfDocument(new PdfWriter(new FileStream(filePath.Replace("txt", "pdf"), FileMode.Create,
+                FileAccess.Write)));
+        using var document = new Document(pdfDocument);
 
-
-        foreach (var line in lines)
-        {
-            document.Add(new Paragraph(line));
-        }
+        foreach (var line in lines) document.Add(new Paragraph(line));
     }
 
-    public void TextToPDF(List<string> folderContent)
+    public void TextToPdf(List<string> folderContent)
     {
-        folderContent.ForEach((item) =>
+        folderContent.ForEach(item =>
         {
             if (item.EndsWith(_pdfConversion.ConvertFrom.ToLower()))
-                TextToPDF(item);
+                TextToPdf(item);
         });
     }
 
     public void TextReplace(string filePath)
     {
         var lines = File.ReadAllLines(filePath);
-        for (int i = 0; i < lines.Length; i++)
-        {
+        for (var i = 0; i < lines.Length; i++)
             if (lines[i].Contains(_textSetting.ReplaceFrom))
                 lines[i] = lines[i].Replace(_textSetting.ReplaceFrom, _textSetting.ReplaceWith);
-        }
         File.WriteAllLines(filePath, lines);
     }
 
     public void TextReplace(List<string> folderContent)
     {
-        folderContent.ForEach((item) =>
+        folderContent.ForEach(item =>
         {
             if (item.EndsWith("txt"))
                 TextReplace(item);
         });
-    }
-
-    public void Execute()
-    {
-        if (ToPDF)
-        {
-            if (TaskInput is PDFConversion conversion)
-                _pdfConversion = conversion;
-            TextToPDF(_functions.FolderFiles(_folder.GetTemporaryDirectory()).ToList());
-            return;
-        }
-        if (TaskInput is TextSettings settings)
-            _textSetting = settings;
-        TextReplace(_functions.FolderFiles(_folder.GetTemporaryDirectory()).ToList());
-        return;
-
-        throw new ArgumentNullException(nameof(TaskInput));
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -11,7 +10,7 @@ using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.Models.Functions;
 
-public class MailService : IService
+public partial class MailService : IService
 {
     private const string ERROR = "Error on the following item(s):";
     private const string SMPT_SERVICE = "smtp.gmail.com";
@@ -19,6 +18,12 @@ public class MailService : IService
 
     public object TaskInput { get; set; }
     public object? TaskResult { get; set; }
+
+    public void Execute()
+    {
+        if (ValidateMailProperties())
+            SendMail();
+    }
 
     private bool ValidateMailProperties()
     {
@@ -43,13 +48,10 @@ public class MailService : IService
     {
         if (list == "")
             return true;
-        var input = (list.Contains(';')) ? list.Split(';') : new string[] { list };
-        string mailPattern = "^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*$";
+        var input = list.Contains(';') ? list.Split(';') : new[] { list };
         if (input.ToList() == new List<string>())
             ArgumentException.ThrowIfNullOrEmpty(nameof(list));
-        if (input.ToList().Any(x => !Regex.IsMatch(x, mailPattern)))
-            return false;
-        return true;
+        return input.ToList().All(x => MailPattern().IsMatch(x));
     }
 
     private void SendMail()
@@ -57,9 +59,15 @@ public class MailService : IService
         if (_mail.Receivers == null)
             return;
 
-        var receivers = _mail.Receivers.Contains(';') ? _mail.Receivers.Split(';').ToList() : new List<string> { _mail.Receivers };
-        var carbonCopy = _mail.CarbonCopy.Contains(';') ? _mail.CarbonCopy.Split(';').ToList() : new List<string> { _mail.CarbonCopy };
-        var blindCarbonCopy = _mail.BlindCarbonCopy.Contains(';') ? _mail.BlindCarbonCopy.Split(';').ToList() : new List<string> { _mail.BlindCarbonCopy };
+        var receivers = _mail.Receivers.Contains(';')
+            ? _mail.Receivers.Split(';').ToList()
+            : new List<string> { _mail.Receivers };
+        var carbonCopy = _mail.CarbonCopy.Contains(';')
+            ? _mail.CarbonCopy.Split(';').ToList()
+            : new List<string> { _mail.CarbonCopy };
+        var blindCarbonCopy = _mail.BlindCarbonCopy.Contains(';')
+            ? _mail.BlindCarbonCopy.Split(';').ToList()
+            : new List<string> { _mail.BlindCarbonCopy };
 
         MailMessage message = new()
         {
@@ -69,36 +77,23 @@ public class MailService : IService
         };
 
         if (receivers.Any())
-        {
             foreach (var receiver in receivers)
-            {
                 message.To.Add(new MailAddress(receiver));
-            }
-        }
         if (carbonCopy.Any() && carbonCopy.First() != string.Empty)
-        {
             foreach (var cc in carbonCopy)
-            {
                 message.CC.Add(new MailAddress(cc));
-            }
-        }
         if (blindCarbonCopy.Any() && blindCarbonCopy.First() != string.Empty)
-        {
             foreach (var bcc in blindCarbonCopy)
-            {
                 message.Bcc.Add(new MailAddress(bcc));
-            }
-        }
-        message.From = new MailAddress("random.guids@gmail.com");
+        message.From = new MailAddress(settings.Default.EMAIL);
 
-        using SmtpClient smtp = new SmtpClient();
-
+        var smtp = new SmtpClient();
         smtp.Host = SMPT_SERVICE;
         smtp.Port = 587;
         smtp.EnableSsl = true;
         smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
         smtp.UseDefaultCredentials = false;
-        smtp.Credentials = new NetworkCredential("random.guids@gmail.com", "roysoxyhodtbycwu");
+        smtp.Credentials = new NetworkCredential(settings.Default.EMAIL, settings.Default.PASS);
 
         try
         {
@@ -108,11 +103,8 @@ public class MailService : IService
         {
             throw new SmtpException(ex.Message);
         }
+    }
 
-    }
-    public void Execute()
-    {
-        if (ValidateMailProperties())
-            SendMail();
-    }
+    [GeneratedRegex("^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*$")]
+    private static partial Regex MailPattern();
 }

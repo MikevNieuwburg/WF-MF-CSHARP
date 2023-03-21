@@ -5,7 +5,10 @@ namespace WPF_MiniForms_CSharp.Models.Helper;
 
 public class Base64
 {
-    public string Encrypt(string text) => Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
+    public string Encrypt(string text)
+    {
+        return Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
+    }
 
     public string Decrypt(string base64)
     {
@@ -18,7 +21,7 @@ public class Base64
         {
             throw new Exception("File doesn't contain a suitable Base64 string.", e.InnerException);
         }
+
         return placeholder;
     }
-
 }

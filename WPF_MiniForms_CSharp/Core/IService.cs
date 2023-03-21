@@ -2,8 +2,7 @@
 
 public interface IService
 {
-    public void Execute();
     public object TaskInput { get; set; }
     public object? TaskResult { get; set; }
-
+    public void Execute();
 }

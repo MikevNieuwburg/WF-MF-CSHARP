@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.Models.Functions;
 
 namespace WPF_MiniForms_CSharp.EncryptionModule;
@@ -26,7 +25,7 @@ public partial class Encryption : Window
 
     private void EncodeObject(object sender, RoutedEventArgs e)
     {
-        bool Encrypt = true;
+        var Encrypt = true;
         CryptoObject = new EncodeRecord(Encrypt, passwordField.Text, saltField.Text);
         Window = new EncryptionWindowObject(passwordField.Text, saltField.Text);
         DialogResult = true;
@@ -34,7 +33,7 @@ public partial class Encryption : Window
 
     private void DecodeObject(object sender, RoutedEventArgs e)
     {
-        bool Encrypt = false;
+        var Encrypt = false;
         CryptoObject = new EncodeRecord(Encrypt, passwordField.Text, saltField.Text);
         Window = new EncryptionWindowObject(passwordField.Text, saltField.Text);
         DialogResult = true;

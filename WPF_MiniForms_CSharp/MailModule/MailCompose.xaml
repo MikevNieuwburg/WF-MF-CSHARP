@@ -8,21 +8,26 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Core/StyleDictionary.xaml"/>
+                <ResourceDictionary Source="/Core/StyleDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel Margin="20" ClipToBounds="True">
         <Label Content="Receiver" Style="{StaticResource headerLabel}" />
-        <TextBox x:Name="receiver" Text="" ToolTip="Add receiver, use a semicolon (;) to use multiple." Style="{StaticResource bigTextBox}" />
+        <TextBox x:Name="receiver" Text="" ToolTip="Add receiver, use a semicolon (;) to use multiple."
+                 Style="{StaticResource bigTextBox}" />
         <Label Content="CC" Style="{StaticResource headerLabel}" />
-        <TextBox x:Name="carboncopy" Text="" ToolTip="Add a carbon copy receiver, use a semicolon (;) to use multiple."  Style="{StaticResource bigTextBox}"/>
+        <TextBox x:Name="carboncopy" Text="" ToolTip="Add a carbon copy receiver, use a semicolon (;) to use multiple."
+                 Style="{StaticResource bigTextBox}" />
         <Label Content="BCC" Style="{StaticResource headerLabel}" />
-        <TextBox x:Name="blindcopy" Text="" ToolTip="Add a blind carbon copy, use a semicolon (;) to use multiple."  Style="{StaticResource bigTextBox}"/>
+        <TextBox x:Name="blindcopy" Text="" ToolTip="Add a blind carbon copy, use a semicolon (;) to use multiple."
+                 Style="{StaticResource bigTextBox}" />
         <Label Content="Subject" Style="{StaticResource headerLabel}" />
-        <TextBox x:Name="header" Text=""   Style="{StaticResource bigTextBox}"/>
+        <TextBox x:Name="header" Text="" Style="{StaticResource bigTextBox}" />
         <Label Content="Message" Style="{StaticResource headerLabel}" />
-        <TextBox x:Name="message" Text=""  ClipToBounds="True" Height="198" AcceptsReturn="True" TextWrapping="WrapWithOverflow" BorderThickness="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-        <Button Content="Set values" Style="{StaticResource bigButton}" Margin="0,25,0,0" Click="Button_Click"/>
+        <TextBox x:Name="message" Text="" ClipToBounds="True" Height="198" AcceptsReturn="True"
+                 TextWrapping="WrapWithOverflow" BorderThickness="1" ScrollViewer.CanContentScroll="True"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        <Button Content="Set values" Style="{StaticResource bigButton}" Margin="0,25,0,0" Click="Button_Click" />
     </StackPanel>
 </Window>

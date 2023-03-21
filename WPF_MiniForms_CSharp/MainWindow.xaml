@@ -8,22 +8,31 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="\Core\StyleDictionary.xaml"/>
+                <ResourceDictionary Source="\Core\StyleDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <ListBox Margin="34,60,516,130" x:Name="listBoxModules"/>
-        <ListBox Margin="314,60,262,130" x:Name="listBoxModuleOrder"/>
+        <ListBox Margin="34,60,516,130" x:Name="listBoxModules" />
+        <ListBox Margin="314,60,262,130" x:Name="listBoxModuleOrder" />
         <ListBox x:Name="informationStack" Margin="570,60,48,35" BorderThickness="1" />
-        <Label Content="Modules" HorizontalAlignment="Left" Margin="110,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" Style="{StaticResource headerBoldLabel}"/>
-        <Label Content="Module Order" HorizontalAlignment="Left" Margin="376,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" Style="{StaticResource headerBoldLabel}"/>
-        <Label Content="Log" HorizontalAlignment="Left" Margin="644,14,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" Style="{StaticResource headerBoldLabel}"/>
-        <Label x:Name="labelSelectedItem" Content="Item Selected :" HorizontalAlignment="Left" Margin="34,323,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
-        <Button Content="Run program" HorizontalAlignment="Left" Margin="184,379,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="RunModules"/>
-        <Button Content="Add Module" HorizontalAlignment="Left" Margin="35,379,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="AddModuleClick"/>
-        <Label x:Name="labelLastSelectedItem" Content="Item Selected :" HorizontalAlignment="Left" Margin="314,332,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14"/>
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="326,379,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="DeleteModule"/>
-        <Button Content="Open" HorizontalAlignment="Left" Margin="455,379,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="InspectModule"/>
+        <Label Content="Modules" HorizontalAlignment="Left" Margin="110,20,0,0" VerticalAlignment="Top"
+               RenderTransformOrigin="0.022,0.566" Style="{StaticResource headerBoldLabel}" />
+        <Label Content="Module Order" HorizontalAlignment="Left" Margin="376,20,0,0" VerticalAlignment="Top"
+               RenderTransformOrigin="0.022,0.566" Style="{StaticResource headerBoldLabel}" />
+        <Label Content="Log" HorizontalAlignment="Left" Margin="644,14,0,0" VerticalAlignment="Top"
+               RenderTransformOrigin="0.022,0.566" Style="{StaticResource headerBoldLabel}" />
+        <Label x:Name="labelSelectedItem" Content="Item Selected :" HorizontalAlignment="Left" Margin="34,323,0,0"
+               VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14" />
+        <Button Content="Run program" HorizontalAlignment="Left" Margin="184,379,0,0" VerticalAlignment="Top"
+                Width="100" Height="40" Click="RunModules" />
+        <Button Content="Add Module" HorizontalAlignment="Left" Margin="35,379,0,0" VerticalAlignment="Top" Width="100"
+                Height="40" Click="AddModuleClick" />
+        <Label x:Name="labelLastSelectedItem" Content="Item Selected :" HorizontalAlignment="Left" Margin="314,332,0,0"
+               VerticalAlignment="Top" RenderTransformOrigin="0.022,0.566" FontSize="14" />
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="326,379,0,0" VerticalAlignment="Top" Width="100"
+                Height="40" Click="DeleteModule" />
+        <Button Content="Open" HorizontalAlignment="Left" Margin="455,379,0,0" VerticalAlignment="Top" Width="100"
+                Height="40" Click="InspectModule" />
     </Grid>
 </Window>

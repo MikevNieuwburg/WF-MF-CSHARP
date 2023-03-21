@@ -3,22 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF_MiniForms_CSharp.TextModule"
         mc:Ignorable="d"
         Title="WordTemplate" Height="246" Width="808" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Core/StyleDictionary.xaml"/>
+                <ResourceDictionary Source="/Core/StyleDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid Height="434" VerticalAlignment="Top">
-        <Button Content="Select file" HorizontalAlignment="Left" Margin="651,36,0,0" VerticalAlignment="Top" Style="{StaticResource buttonDefault}" Height="37" Click="Button_Click"/>
-        <TextBox x:Name="templateTb" HorizontalAlignment="Left" Margin="32,39,0,365" TextWrapping="Wrap" Text="" Style="{StaticResource folderTextBox}" Width="597" ToolTip="Select the dot | dotx file."/>
-        <TextBox x:Name="filenameTb" HorizontalAlignment="Left" Margin="32,100,0,304" TextWrapping="Wrap" Text="" Style="{StaticResource folderTextBox}" Width="597"/>
-        <Label x:Name="templateLbl" Style="{StaticResource headerBoldLabel}" Content="Template Location" HorizontalAlignment="Left" Margin="32,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.277,3.182"/>
-        <Label x:Name="filenameLbl" Style="{StaticResource headerBoldLabel}" Content="File name" HorizontalAlignment="Left" Margin="32,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.277,3.182"/>
-        <Button Content="Set values" Style="{StaticResource bigButton}" Margin="262,150,258,234" Click="Button_Click_2"/>
+        <Button Content="Select file" HorizontalAlignment="Left" Margin="651,36,0,0" VerticalAlignment="Top"
+                Style="{StaticResource buttonDefault}" Height="37" Click="Button_Click" />
+        <TextBox x:Name="templateTb" HorizontalAlignment="Left" Margin="32,39,0,365" TextWrapping="Wrap" Text=""
+                 Style="{StaticResource folderTextBox}" Width="597" ToolTip="Select the dot | dotx file." />
+        <TextBox x:Name="filenameTb" HorizontalAlignment="Left" Margin="32,100,0,304" TextWrapping="Wrap" Text=""
+                 Style="{StaticResource folderTextBox}" Width="597" />
+        <Label x:Name="templateLbl" Style="{StaticResource headerBoldLabel}" Content="Template Location"
+               HorizontalAlignment="Left" Margin="32,13,0,0" VerticalAlignment="Top"
+               RenderTransformOrigin="-0.277,3.182" />
+        <Label x:Name="filenameLbl" Style="{StaticResource headerBoldLabel}" Content="File name"
+               HorizontalAlignment="Left" Margin="32,74,0,0" VerticalAlignment="Top"
+               RenderTransformOrigin="-0.277,3.182" />
+        <Button Content="Set values" Style="{StaticResource bigButton}" Margin="262,150,258,234" Click="Button_Click_2" />
     </Grid>
 </Window>

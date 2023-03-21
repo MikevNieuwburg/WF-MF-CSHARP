@@ -9,7 +9,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions;
 public class FolderFunctions
 {
     private const string FOLDER_TITLE = "Pick a folder";
-    private TemporaryFolder _tempFolder;
+    private readonly TemporaryFolder _tempFolder;
 
     public FolderFunctions(TemporaryFolder tempFolder)
     {
@@ -20,9 +20,9 @@ public class FolderFunctions
 
     public string FolderPath(string title = "")
     {
-        using var dialog = new FolderBrowserDialog()
+        using var dialog = new FolderBrowserDialog
         {
-            Description = (title == string.Empty) ? FOLDER_TITLE : title,
+            Description = title == string.Empty ? FOLDER_TITLE : title,
             UseDescriptionForTitle = true,
             SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             ShowNewFolderButton = true
@@ -32,6 +32,7 @@ public class FolderFunctions
             dialog.Dispose();
             return dialog.SelectedPath + @"\";
         }
+
         return string.Empty;
     }
 
@@ -46,21 +47,19 @@ public class FolderFunctions
         }
         catch (Exception ex)
         {
-            throw new Exception("Either the argument passed failed to parse or the path is too long.", ex.InnerException);
+            throw new Exception("Either the argument passed failed to parse or the path is too long.",
+                ex.InnerException);
         }
     }
 
     public string GetFile(string filter)
     {
-        using OpenFileDialog ofd = new OpenFileDialog();
+        using var ofd = new OpenFileDialog();
         ofd.Filter = filter;
         var result = ofd.ShowDialog();
 
 
-        if (result == DialogResult.OK)
-        {
-            return ofd.FileName;
-        }
+        if (result == DialogResult.OK) return ofd.FileName;
         throw new FileNotFoundException("File not found.");
     }
 }

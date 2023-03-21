@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.FolderModule;
@@ -16,23 +16,22 @@ namespace WPF_MiniForms_CSharp;
 
 public partial class MainWindow : Window
 {
-    private IHost _host;
-    private string _selectedModule;
+    private readonly IHost _host;
+    private readonly List<string> _moduleNames = new();
+    private readonly List<IService> _modules = new();
+    private readonly List<object> _windows = new();
     private int _lastSelectedModule;
     private ModuleEnum.ModulesEnum _moduleEnum;
     private ModuleEnum.ModulesEnum _orderModule;
-    private readonly List<string> _moduleNames = new List<string>();
-    private readonly List<IService> _modules = new List<IService>();
-    private readonly List<object> _windows = new List<object>();
+    private string _selectedModule;
 
     public MainWindow(IHost host)
     {
         InitializeComponent();
         _host = host;
         foreach (var module in Enum.GetValues(typeof(ModuleEnum.ModulesEnum)))
-        {
-            _moduleNames.Add(string.Concat(module.ToString()!.Select(s => char.IsUpper(s) ? " " + s : s.ToString())).TrimStart(' '));
-        }
+            _moduleNames.Add(string.Concat(module.ToString()!.Select(s => char.IsUpper(s) ? " " + s : s.ToString()))
+                .TrimStart(' '));
 
         listBoxModules.ItemsSource = _moduleNames;
         listBoxModules.SelectionChanged += ListBoxModules_SelectionChanged;
@@ -50,12 +49,13 @@ public partial class MainWindow : Window
         labelLastSelectedItem.Content = $"Item Selected : {listBoxModuleOrder.SelectedItem}";
     }
 
-    private void ListBoxModules_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    private void ListBoxModules_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (listBoxModules.SelectedItem == null)
             return;
         _selectedModule = listBoxModules.SelectedItem.ToString()!;
-        if (Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModules.SelectedItem.ToString()!.Replace(" ", "")) is ModuleEnum.ModulesEnum parsedValue)
+        if (Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModules.SelectedItem.ToString()!.Replace(" ", "")) is
+            ModuleEnum.ModulesEnum parsedValue)
             _moduleEnum = parsedValue;
         labelSelectedItem.Content = $"Item Selected : {listBoxModules.SelectedItem}";
     }
@@ -63,7 +63,6 @@ public partial class MainWindow : Window
     private void AddModuleClick(object sender, RoutedEventArgs e)
     {
         OpenModule(_moduleEnum);
-
     }
 
     private void OpenModule(ModuleEnum.ModulesEnum moduleEnum, object passWindow = null)
@@ -82,6 +81,7 @@ public partial class MainWindow : Window
                     _modules.Add(folderInWindow.Service);
                     _windows.Add(folderInWindow.GivenPath);
                 }
+
                 break;
             case ModuleEnum.ModulesEnum.FolderOut:
                 var folderOutWindow = _host.Services.GetRequiredService<FolderPicker>();
@@ -95,6 +95,7 @@ public partial class MainWindow : Window
                     _modules.Add(folderOutWindow.Service);
                     _windows.Add(folderOutWindow.GivenPath);
                 }
+
                 break;
             case ModuleEnum.ModulesEnum.Encrypt:
             case ModuleEnum.ModulesEnum.Decrypt:
@@ -108,6 +109,7 @@ public partial class MainWindow : Window
                     _modules.Add(encryptionWindow.Service);
                     _windows.Add(encryptionWindow.Window);
                 }
+
                 break;
             case ModuleEnum.ModulesEnum.MailOut:
                 var mailWindow = _host.Services.GetRequiredService<MailCompose>();
@@ -120,6 +122,7 @@ public partial class MainWindow : Window
                     _modules.Add(mailWindow.Service);
                     _windows.Add(mailWindow.Window);
                 }
+
                 break;
             case ModuleEnum.ModulesEnum.TextReplace:
                 var replaceWindow = _host.Services.GetRequiredService<TextReplace>();
@@ -128,10 +131,11 @@ public partial class MainWindow : Window
                 if (replaceWindow.ShowDialog() == true)
                 {
                     listBoxModuleOrder.Items.Add(_selectedModule);
-                    replaceWindow.Service.ToPDF = false;
+                    replaceWindow.Service.ToPdf = false;
                     _modules.Add(replaceWindow.Service);
                     _windows.Add(replaceWindow.Window);
                 }
+
                 break;
             case ModuleEnum.ModulesEnum.TextToPdf:
                 var convertWindow = _host.Services.GetRequiredService<ConvertComposer>();
@@ -140,10 +144,15 @@ public partial class MainWindow : Window
                 if (convertWindow.ShowDialog() == true)
                 {
                     listBoxModuleOrder.Items.Add(_selectedModule);
-                    convertWindow.Service.ToPDF = true;
-                    _modules.Add(convertWindow.Service);
+                    if (convertWindow.Service != null)
+                    {
+                        convertWindow.Service.ToPdf = true;
+                        _modules.Add(convertWindow.Service);
+                    }
+
                     _windows.Add(convertWindow.Window);
                 }
+
                 break;
             case ModuleEnum.ModulesEnum.WordTemplate:
                 var wordWindow = _host.Services.GetRequiredService<WordTemplate>();
@@ -155,6 +164,7 @@ public partial class MainWindow : Window
                     _modules.Add(wordWindow.Service);
                     _windows.Add(wordWindow.TemplateFile);
                 }
+
                 break;
             default:
                 throw new ArgumentNullException("No module was selected. Please select one before you try to add it.");
@@ -165,18 +175,20 @@ public partial class MainWindow : Window
     {
         if (_modules.Count == 0)
         {
-            informationStack.Items.Add($"No modules available.");
+            informationStack.Items.Add("No modules available.");
 
             return;
         }
+
         informationStack.Items.Add($"Starting at: {DateTime.Now.ToShortTimeString()}");
 
-        for (int i = 0; i < _modules.Count; i++)
+        for (var i = 0; i < _modules.Count; i++)
         {
             var module = _modules[i];
             module.Execute();
             informationStack.Items.Add($"{nameof(module)} #{i} started");
         }
+
         informationStack.Items.Add($"All modules completed.\nEnd time at {DateTime.Now.ToShortTimeString()}");
     }
 
@@ -194,7 +206,8 @@ public partial class MainWindow : Window
     {
         if (listBoxModuleOrder.Items.Count == 0 || _lastSelectedModule > listBoxModuleOrder.Items.Count)
             return;
-        if (Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModuleOrder.SelectedItem.ToString()!.Replace(" ", "")) is ModuleEnum.ModulesEnum parsedValue)
+        if (Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModuleOrder.SelectedItem.ToString()!.Replace(" ", "")) is
+            ModuleEnum.ModulesEnum parsedValue)
             _orderModule = parsedValue;
 
         if (_orderModule != null)

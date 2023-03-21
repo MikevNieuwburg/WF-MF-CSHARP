@@ -7,7 +7,6 @@ namespace WPF_MiniForms_CSharp.MailModule;
 public partial class MailCompose : Window
 {
     public MailService Service;
-    public ComposeMail Mail { get; set; }
     public MailWindow Window;
 
     public MailCompose(MailService service)
@@ -16,6 +15,8 @@ public partial class MailCompose : Window
         Service = service;
         ReopenWindow(Window);
     }
+
+    public ComposeMail Mail { get; set; }
 
     private void ReopenWindow(MailWindow window)
     {
@@ -34,7 +35,7 @@ public partial class MailCompose : Window
         var title = header.Text;
         var msg = message.Text;
         Mail = new ComposeMail(title, msg, receivers, cc, bcc);
-        Window = new MailWindow(Header: title, Message: msg, Receiver: receivers, CC: cc, BCC: bcc);
+        Window = new MailWindow(title, msg, receivers, cc, bcc);
         DialogResult = true;
     }
 }

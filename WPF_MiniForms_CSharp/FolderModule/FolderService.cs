@@ -9,10 +9,10 @@ namespace WPF_MiniForms_CSharp.Models.Modules;
 
 public class FolderService : IService
 {
-
     private readonly FolderFunctions _functions;
 
     #region Interface implementation
+
     public object? TaskResult { get; set; }
     public object TaskInput { get; set; }
     internal ModuleEnum.ModulesEnum Module { get; set; }
@@ -24,7 +24,7 @@ public class FolderService : IService
 
     public void Execute()
     {
-        string path = "";
+        var path = "";
 
         if (TaskInput is string input && string.IsNullOrEmpty(input) == false)
             path = input;
@@ -32,7 +32,6 @@ public class FolderService : IService
         if (Module == ModuleEnum.ModulesEnum.FolderIn)
         {
             foreach (var item in _functions.FolderFiles(path))
-            {
                 try
                 {
                     var filename = item.Split('\\').Last();
@@ -44,10 +43,10 @@ public class FolderService : IService
                 {
                     throw new Exception(e.Message);
                 }
-            }
 
             return;
         }
+
         var tempFolder = _functions.GetTemporaryFolder;
 
 
@@ -55,7 +54,6 @@ public class FolderService : IService
             throw new DirectoryNotFoundException(path);
 
         foreach (var file in _functions.FolderFiles(tempFolder))
-        {
             try
             {
                 var filename = file.Split('\\').Last();
@@ -65,7 +63,6 @@ public class FolderService : IService
             {
                 throw new Exception(ex.Message);
             }
-        }
     }
 
     #endregion

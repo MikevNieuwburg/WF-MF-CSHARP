@@ -8,7 +8,6 @@ public partial class FolderPicker : Window
 {
     private readonly FolderFunctions _functions;
     public FolderService Service;
-    public string GivenPath { get; set; }
 
     public FolderPicker(FolderService service, FolderFunctions functions)
     {
@@ -18,6 +17,8 @@ public partial class FolderPicker : Window
         Service = service;
         DataContext = this;
     }
+
+    public string GivenPath { get; set; }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {

@@ -3,35 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF_MiniForms_CSharp.TextModule"
         mc:Ignorable="d"
         Title="Text Replace Module" Height="300" Width="800" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="\Core\StyleDictionary.xaml"/>
+                <ResourceDictionary Source="\Core\StyleDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel Style="{StaticResource stackBody}">
-        <Label Content="Text Replace" HorizontalAlignment="Center"/>
+        <Label Content="Text Replace" HorizontalAlignment="Center" />
         <StackPanel Orientation="Horizontal" Height="120">
             <StackPanel Width="380" Margin="5, 0">
-                <Label Content="Label" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}"/>
-                <Label Content="Type whole word you want to be replaced." HorizontalAlignment="Center"/>
-                <TextBox x:Name="changeFrom" Margin="10,0,10,0" Style="{StaticResource bigTextBox}"/>
+                <Label Content="Label" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}" />
+                <Label Content="Type whole word you want to be replaced." HorizontalAlignment="Center" />
+                <TextBox x:Name="changeFrom" Margin="10,0,10,0" Style="{StaticResource bigTextBox}" />
             </StackPanel>
             <StackPanel Width="380" Margin="5, 0">
-                <Label Content="Label" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}"/>
-                <Label Content="This will be the word the other text will be replaced with." HorizontalAlignment="Center" ToolTip=""/>
-                <TextBox x:Name="changeTo" Margin="10,0,10,0" Style="{StaticResource bigTextBox}"/>
+                <Label Content="Label" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}" />
+                <Label Content="This will be the word the other text will be replaced with."
+                       HorizontalAlignment="Center" ToolTip="" />
+                <TextBox x:Name="changeTo" Margin="10,0,10,0" Style="{StaticResource bigTextBox}" />
             </StackPanel>
         </StackPanel>
         <StackPanel x:Name="changePanel" HorizontalAlignment="Center" Style="{StaticResource stackHorizontal}">
-            <Label x:Name="leftLabelChange" Content="A" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}"/>
-            <Label Content="→" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}"/>
-            <Label x:Name="rightLabelChange" Content="B" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}"/>
+            <Label x:Name="leftLabelChange" Content="A" HorizontalAlignment="Center"
+                   Style="{StaticResource headerBoldLabel}" />
+            <Label Content="→" HorizontalAlignment="Center" Style="{StaticResource headerBoldLabel}" />
+            <Label x:Name="rightLabelChange" Content="B" HorizontalAlignment="Center"
+                   Style="{StaticResource headerBoldLabel}" />
         </StackPanel>
-        <Button Content="Set Conversion" Style="{StaticResource buttonDefault}" Margin="20" Click="Button_Click"/>
+        <Button Content="Set Conversion" Style="{StaticResource buttonDefault}" Margin="20" Click="Button_Click" />
     </StackPanel>
 </Window>

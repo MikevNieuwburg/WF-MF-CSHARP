@@ -5,13 +5,15 @@ namespace WPF_MiniForms_CSharp.TextModule;
 
 public partial class ConvertComposer : Window
 {
-    public TextService? Service { get; set; }
     public ConvertWindow? Window;
+
     public ConvertComposer(TextService service)
     {
         InitializeComponent();
         Service = service;
     }
+
+    public TextService? Service { get; set; }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
@@ -22,8 +24,9 @@ public partial class ConvertComposer : Window
             MessageBox.Show("", "No item selected on convert to.");
             return;
         }
-        Service!.TaskInput = new PDFConversion(ConvertFrom: comboFrom, ConvertTo: comboTo);
-        Window = new ConvertWindow(From: comboFrom, To: comboTo);
+
+        Service!.TaskInput = new PDFConversion(comboFrom, comboTo);
+        Window = new ConvertWindow(comboFrom, comboTo);
         DialogResult = true;
     }
 }
