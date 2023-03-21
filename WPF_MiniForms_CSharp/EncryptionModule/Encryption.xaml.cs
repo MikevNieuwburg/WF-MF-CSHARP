@@ -6,14 +6,14 @@ namespace WPF_MiniForms_CSharp.EncryptionModule;
 
 public partial class Encryption : Window
 {
-    public EncodeRecord CryptoObject;
-    public EncryptionService Service;
-    public EncryptionWindowObject Window;
+    public EncodeRecord? CryptoObject;
+    public EncryptionService? Service;
+    public EncryptionWindowObject? Window;
 
     public Encryption(EncryptionService service)
     {
         InitializeComponent();
-        ResetWindow(Window);
+        ResetWindow(Window!);
         Service = service;
     }
 

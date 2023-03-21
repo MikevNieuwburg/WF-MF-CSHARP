@@ -192,7 +192,6 @@ public partial class MainWindow : Window
 
     private void InspectModule(object sender, RoutedEventArgs e)
     {
-
         if (listBoxModuleOrder.Items.Count == 0 || _lastSelectedModule > listBoxModuleOrder.Items.Count)
             return;
         if (Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModuleOrder.SelectedItem.ToString()!.Replace(" ", "")) is ModuleEnum.ModulesEnum parsedValue)

@@ -9,17 +9,8 @@ public class EncryptionService : IService
 {
     private readonly Base64 _base;
     private readonly FolderFunctions _folder;
-
-    public object TaskInput
-    {
-        get;
-        set;
-    }
-    public object? TaskResult
-    {
-        get;
-        set;
-    }
+    public object TaskInput { get;set; }
+    public object? TaskResult { get;set; }
 
     public EncryptionService(Base64 base64, FolderFunctions folderFunctions)
     {

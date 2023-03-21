@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WPF_MiniForms_CSharp" GeneratedClassName="settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="EMAIL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">random.guids@gmail.com</Value>
+    </Setting>
+    <Setting Name="PASS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">roysoxyhodtbycwu</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

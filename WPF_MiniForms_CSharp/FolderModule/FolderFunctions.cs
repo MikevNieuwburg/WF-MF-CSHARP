@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using WPF_MiniForms_CSharp.Core;
 
@@ -9,6 +8,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions;
 
 public class FolderFunctions
 {
+    private const string FOLDER_TITLE = "Pick a folder";
     private TemporaryFolder _tempFolder;
 
     public FolderFunctions(TemporaryFolder tempFolder)
@@ -18,43 +18,11 @@ public class FolderFunctions
 
     public string GetTemporaryFolder => _tempFolder.GetTemporaryDirectory();
 
-    public IEnumerable<string>? Files()
-    {
-        var path = _tempFolder.GetTemporaryDirectory();
-        return FolderFiles(path);
-    }
-    public IEnumerable<string>? Directories()
-    {
-        var path = _tempFolder.GetTemporaryDirectory();
-        return FolderDirectories(path);
-    }
-
-    public Dictionary<string, IEnumerable<string>> GetFolder()
-    {
-
-        var path = _tempFolder.GetTemporaryDirectory();
-        var directories = FolderDirectories(path);
-        var dictionary = new Dictionary<string, IEnumerable<string>>();
-
-        if (directories?.Count() > 0)
-        {
-            for (int i = 0; i < directories.Count(); i++)
-            {
-                var dir = directories.ToArray()[i];
-                var contentFromDir = FolderFiles(dir + '\\');
-                if (contentFromDir != null)
-                    dictionary.Add(dir, contentFromDir);
-
-            }
-        }
-        return dictionary;
-    }
-
     public string FolderPath(string title = "")
     {
         using var dialog = new FolderBrowserDialog()
         {
-            Description = (title == string.Empty) ? "Pick a folder" : title,
+            Description = (title == string.Empty) ? FOLDER_TITLE : title,
             UseDescriptionForTitle = true,
             SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             ShowNewFolderButton = true
@@ -67,33 +35,18 @@ public class FolderFunctions
         return string.Empty;
     }
 
-    public IEnumerable<string>? FolderDirectories(string path)
+    public IEnumerable<string> FolderFiles(string path)
     {
         if (string.IsNullOrEmpty(path))
-            return null;
-
-        try
-        {
-            return Directory.EnumerateDirectories(Path.GetDirectoryName(path));
-        }
-        catch
-        {
-            throw new Exception("Either the argument passed failed to parse or the path is too long.");
-        }
-    }
-
-    public IEnumerable<string>? FolderFiles(string path)
-    {
-        if (string.IsNullOrEmpty(path))
-            return null;
+            return Array.Empty<string>();
 
         try
         {
             return Directory.EnumerateFiles(Path.GetDirectoryName(path));
         }
-        catch
+        catch (Exception ex)
         {
-            throw new Exception("Either the argument passed failed to parse or the path is too long.");
+            throw new Exception("Either the argument passed failed to parse or the path is too long.", ex.InnerException);
         }
     }
 

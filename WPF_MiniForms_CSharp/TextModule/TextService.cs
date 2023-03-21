@@ -8,7 +8,7 @@ using System.Linq;
 using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.Models.Functions;
 using WPF_MiniForms_CSharp.Models.Interfaces;
-using word = Microsoft.Office.Interop.Word;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace WPF_MiniForms_CSharp.TextModule;
 
@@ -38,8 +38,8 @@ public class TextService : IService
         if (_pdfConversion.ConvertTo == "docx")
         {
             object oMissing = System.Reflection.Missing.Value;
-            word.Application application = new word.Application();
-            word.Document wordDoc = application.Documents.Add(ref oMissing, ref oMissing, ref oMissing, ref oMissing);
+            Word.Application application = new Word.Application();
+            Word.Document wordDoc = application.Documents.Add(ref oMissing, ref oMissing, ref oMissing, ref oMissing);
             foreach (var singleLine in lines)
             {
                 wordDoc.Content.InsertAfter(singleLine);

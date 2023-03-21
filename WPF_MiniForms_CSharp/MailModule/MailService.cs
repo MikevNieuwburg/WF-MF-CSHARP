@@ -14,6 +14,7 @@ namespace WPF_MiniForms_CSharp.Models.Functions;
 public class MailService : IService
 {
     private const string ERROR = "Error on the following item(s):";
+    private const string SMPT_SERVICE = "smtp.gmail.com";
     private ComposeMail _mail;
 
     public object TaskInput { get; set; }
@@ -92,14 +93,12 @@ public class MailService : IService
 
         using SmtpClient smtp = new SmtpClient();
 
-        smtp.Host = "smtp.gmail.com";
+        smtp.Host = SMPT_SERVICE;
         smtp.Port = 587;
         smtp.EnableSsl = true;
         smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
         smtp.UseDefaultCredentials = false;
         smtp.Credentials = new NetworkCredential("random.guids@gmail.com", "roysoxyhodtbycwu");
-
-
 
         try
         {
@@ -107,7 +106,7 @@ public class MailService : IService
         }
         catch (SmtpException ex)
         {
-            Debug.WriteLine(ex.ToString());
+            throw new SmtpException(ex.Message);
         }
 
     }

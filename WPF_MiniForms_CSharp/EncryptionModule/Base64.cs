@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Windows;
 
 namespace WPF_MiniForms_CSharp.Models.Helper;
 
@@ -10,14 +9,14 @@ public class Base64
 
     public string Decrypt(string base64)
     {
-        string placeholder = "";
+        string placeholder;
         try
         {
             placeholder = Encoding.UTF8.GetString(Convert.FromBase64String(base64));
         }
         catch (Exception e)
         {
-            MessageBox.Show("", e.Message);
+            throw new Exception("File doesn't contain a suitable Base64 string.", e.InnerException);
         }
         return placeholder;
     }

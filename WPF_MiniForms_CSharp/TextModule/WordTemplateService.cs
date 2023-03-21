@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 using WPF_MiniForms_CSharp.Models.Interfaces;
 
 namespace WPF_MiniForms_CSharp.TextModule
@@ -15,8 +16,8 @@ namespace WPF_MiniForms_CSharp.TextModule
 
 
         /// <summary>
-        /// https://stackoverflow.com/questions/6294084/change-or-add-template-in-word-document
-        /// Used this source to apply templates to a word document.
+        /// https://stackoverflow.com/questions/6294084/change-or-add-template-in-Word-document
+        /// Used this source to apply templates to a Word document.
         /// </summary>
         public void Execute()
         {
@@ -56,7 +57,8 @@ namespace WPF_MiniForms_CSharp.TextModule
                             ref missing, ref missing, ref missing, ref missing);
 
                 aDoc.Close(ref missing, ref missing, ref missing);
-                /// garbage collection. mashall.
+                Marshal.ReleaseComObject(aDoc);
+                Marshal.ReleaseComObject(wordApp);
             }
         }
     }
