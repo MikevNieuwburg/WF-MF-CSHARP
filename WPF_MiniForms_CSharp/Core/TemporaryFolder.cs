@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace WPF_MiniForms_CSharp.Core;
+﻿namespace WPF_MiniForms_CSharp.Core;
 
 public class TemporaryFolder
 {

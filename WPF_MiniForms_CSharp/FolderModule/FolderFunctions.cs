@@ -57,7 +57,6 @@ public class FolderFunctions
         using var ofd = new OpenFileDialog();
         ofd.Filter = filter;
         var result = ofd.ShowDialog();
-        if (result == DialogResult.OK) return ofd.FileName;
-        throw new FileNotFoundException("File not found.");
+        return result == DialogResult.OK ? ofd.FileName : string.Empty;
     }
 }

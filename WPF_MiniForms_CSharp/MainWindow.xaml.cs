@@ -41,7 +41,7 @@ public partial class MainWindow : Window
         listBoxModules.ItemsSource = _moduleNames;
         listBoxModules.SelectionChanged += ListBoxModules_SelectionChanged;
         listBoxModuleOrder.SelectionChanged += ModuleListItemSelected;
-        _selectedModule = "";
+        _selectedModule = string.Empty;
     }
 
     private void ModuleListItemSelected(object sender, SelectionChangedEventArgs e)

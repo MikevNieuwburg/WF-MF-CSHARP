@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using WPF_MiniForms_CSharp.FolderModule;
-
-namespace WPF_MiniForms_CSharp.TextModule;
+﻿namespace WPF_MiniForms_CSharp.TextModule;
 
 public partial class WordTemplate : Window
 {

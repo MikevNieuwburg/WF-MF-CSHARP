@@ -23,7 +23,7 @@ public class FolderService : IService
 
     public void Execute()
     {
-        var path = "";
+        var path = string.Empty;
 
         if (TaskInput is string input && string.IsNullOrEmpty(input) == false)
             path = input;

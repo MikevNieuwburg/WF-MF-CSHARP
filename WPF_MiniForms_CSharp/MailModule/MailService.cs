@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Text;
 using System.Text.RegularExpressions;
-using WPF_MiniForms_CSharp.Models.Interfaces;
 
 namespace WPF_MiniForms_CSharp.MailModule;
 
@@ -31,7 +26,7 @@ public partial class MailService : IService
 
         if (string.IsNullOrEmpty(_mail?.Receivers))
             throw new Exception(ERROR + " receiver wasn't filled in as a valid email.");
-        
+
         if (ValidateRegex(_mail.Receivers) == false)
             throw new Exception(ERROR + " receiver wasn't filled in as a valid email.");
         if (ValidateRegex(_mail.CarbonCopy) == false)
@@ -76,21 +71,15 @@ public partial class MailService : IService
 
         if (receivers.Any())
             foreach (var receiver in receivers)
-            {
                 message.To.Add(new MailAddress(receiver));
-            }
 
         if (carbonCopy.Any() && carbonCopy[0] != string.Empty)
             foreach (var cc in carbonCopy)
-            {
                 message.CC.Add(new MailAddress(cc));
-            }
 
         if (blindCarbonCopy.Any() && blindCarbonCopy[0] != string.Empty)
             foreach (var bcc in blindCarbonCopy)
-            {
                 message.Bcc.Add(new MailAddress(bcc));
-            }
 
         message.From = new MailAddress(settings.Default.EMAIL);
 

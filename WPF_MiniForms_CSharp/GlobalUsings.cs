@@ -1,0 +1,16 @@
+﻿global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using System;
+global using System.Collections.Generic;
+global using System.IO;
+global using System.Linq;
+global using System.Reflection;
+global using System.Runtime.InteropServices;
+global using System.Text;
+global using System.Windows;
+global using System.Windows.Controls;
+global using WPF_MiniForms_CSharp.Core;
+global using WPF_MiniForms_CSharp.EncryptionModule;
+global using WPF_MiniForms_CSharp.FolderModule;
+global using WPF_MiniForms_CSharp.MailModule;
+global using WPF_MiniForms_CSharp.TextModule;

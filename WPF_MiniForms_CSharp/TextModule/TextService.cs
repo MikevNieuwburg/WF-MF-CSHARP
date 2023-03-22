@@ -1,15 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using iText.Kernel.Pdf;
-using Microsoft.Office.Interop.Word;
-using WPF_MiniForms_CSharp.Core;
-using WPF_MiniForms_CSharp.FolderModule;
-using WPF_MiniForms_CSharp.Models.Functions;
-using WPF_MiniForms_CSharp.Models.Interfaces;
-using Document = iText.Layout.Document;
-using Paragraph = iText.Layout.Element.Paragraph;
+﻿using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace WPF_MiniForms_CSharp.TextModule;
 
@@ -38,29 +30,20 @@ public class TextService : IService
     {
         if (ToPdf)
         {
-            if (TaskInput is PdfConversion conversion)
-            {
-                _pdfConversion = conversion;
-            }
+            if (TaskInput is PdfConversion conversion) _pdfConversion = conversion;
 
             TextToPdf(_functions.FolderFiles(_folder.GetTemporaryDirectory()).ToList());
             return;
         }
 
-        if (TaskInput is TextSettings settings)
-        {
-            _textSetting = settings;
-        }
+        if (TaskInput is TextSettings settings) _textSetting = settings;
 
         TextReplace(_functions.FolderFiles(_folder.GetTemporaryDirectory()).ToList());
     }
 
     public void TextToPdf(string filePath)
     {
-        if (filePath.Split('.').Last() != _pdfConversion?.ConvertFrom.ToLower())
-        {
-            return;
-        }
+        if (filePath.Split('.').Last() != _pdfConversion?.ConvertFrom.ToLower()) return;
 
         var lines = File.ReadAllLines(filePath);
 
@@ -84,12 +67,13 @@ public class TextService : IService
             }
         }
 
-        using var pdfDocument = 
-            new PdfDocument(new PdfWriter(new FileStream(filePath.Replace(FILE_EX_TXT, FILE_EX_PDF), FileMode.Create, FileAccess.Write)));
-        using var document = 
+        using var pdfDocument =
+            new PdfDocument(new PdfWriter(new FileStream(filePath.Replace(FILE_EX_TXT, FILE_EX_PDF), FileMode.Create,
+                FileAccess.Write)));
+        using var document =
             new Document(pdfDocument);
 
-        foreach (var line in lines) 
+        foreach (var line in lines)
             document.Add(new Paragraph(line));
     }
 
@@ -97,10 +81,7 @@ public class TextService : IService
     {
         folderContent.ForEach(item =>
         {
-            if (item.EndsWith(_pdfConversion?.ConvertFrom.ToLower() ?? string.Empty))
-            {
-                TextToPdf(item);
-            }
+            if (item.EndsWith(_pdfConversion?.ConvertFrom.ToLower() ?? string.Empty)) TextToPdf(item);
         });
     }
 
@@ -108,12 +89,8 @@ public class TextService : IService
     {
         var lines = File.ReadAllLines(filePath);
         for (var i = 0; i < lines.Length; i++)
-        {
             if (lines[i].Contains(_textSetting?.ReplaceFrom ?? string.Empty) && _textSetting?.ReplaceFrom != null)
-            {
                 lines[i] = lines[i].Replace(_textSetting.ReplaceFrom, _textSetting.ReplaceWith);
-            }
-        }
 
         File.WriteAllLines(filePath, lines);
     }
@@ -122,10 +99,7 @@ public class TextService : IService
     {
         folderContent.ForEach(item =>
         {
-            if (item.EndsWith(FILE_EX_TXT))
-            {
-                TextReplace(item);
-            }
+            if (item.EndsWith(FILE_EX_TXT)) TextReplace(item);
         });
     }
 }

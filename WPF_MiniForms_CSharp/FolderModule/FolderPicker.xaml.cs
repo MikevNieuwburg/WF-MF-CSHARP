@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using WPF_MiniForms_CSharp.Models.Functions;
-
-namespace WPF_MiniForms_CSharp.FolderModule;
+﻿namespace WPF_MiniForms_CSharp.FolderModule;
 
 public partial class FolderPicker : Window
 {

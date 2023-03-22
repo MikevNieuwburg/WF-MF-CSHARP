@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace WPF_MiniForms_CSharp.TextModule;
+﻿namespace WPF_MiniForms_CSharp.TextModule;
 
 public static class TextModuleExtension
 {

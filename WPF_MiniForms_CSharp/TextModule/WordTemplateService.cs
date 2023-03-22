@@ -20,7 +20,7 @@ public class WordTemplateService : IService
     /// </summary>
     public void Execute()
     {
-        var input = "";
+        var input = string.Empty;
         if (TaskInput is string inputPath)
             input = inputPath;
         if (string.IsNullOrEmpty(input))

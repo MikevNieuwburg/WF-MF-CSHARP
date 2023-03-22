@@ -1,13 +1,4 @@
-﻿using System.Windows;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using WPF_MiniForms_CSharp.Core;
-using WPF_MiniForms_CSharp.EncryptionModule;
-using WPF_MiniForms_CSharp.FolderModule;
-using WPF_MiniForms_CSharp.MailModule;
-using WPF_MiniForms_CSharp.TextModule;
-
-namespace WPF_MiniForms_CSharp;
+﻿namespace WPF_MiniForms_CSharp;
 
 public partial class App : Application
 {

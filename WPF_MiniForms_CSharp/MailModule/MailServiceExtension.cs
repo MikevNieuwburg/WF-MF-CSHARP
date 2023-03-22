@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace WPF_MiniForms_CSharp.MailModule;
+﻿namespace WPF_MiniForms_CSharp.MailModule;
 
 public static class MailServiceExtension
 {

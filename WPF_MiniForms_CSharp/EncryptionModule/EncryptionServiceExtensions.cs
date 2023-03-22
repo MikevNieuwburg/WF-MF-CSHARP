@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace WPF_MiniForms_CSharp.EncryptionModule;
+﻿namespace WPF_MiniForms_CSharp.EncryptionModule;
 
 public static class EncryptionServiceExtensions
 {

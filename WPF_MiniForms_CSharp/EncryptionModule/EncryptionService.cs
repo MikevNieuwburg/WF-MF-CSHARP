@@ -1,9 +1,4 @@
-﻿using System.IO;
-using WPF_MiniForms_CSharp.FolderModule;
-using WPF_MiniForms_CSharp.Models.Functions;
-using WPF_MiniForms_CSharp.Models.Interfaces;
-
-namespace WPF_MiniForms_CSharp.EncryptionModule;
+﻿namespace WPF_MiniForms_CSharp.EncryptionModule;
 
 public class EncryptionService : IService
 {

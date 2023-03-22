@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Windows;
-
-namespace WPF_MiniForms_CSharp.TextModule;
+﻿namespace WPF_MiniForms_CSharp.TextModule;
 
 public partial class ConvertComposer : Window
 {

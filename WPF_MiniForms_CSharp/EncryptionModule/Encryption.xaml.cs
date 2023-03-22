@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using WPF_MiniForms_CSharp.Models.Functions;
 
 namespace WPF_MiniForms_CSharp.EncryptionModule;
 
