@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace WPF_MiniForms_CSharp.Models.Helper;
+namespace WPF_MiniForms_CSharp.EncryptionModule;
 
 public class Base64
 {

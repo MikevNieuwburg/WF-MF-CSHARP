@@ -5,7 +5,6 @@ using WPF_MiniForms_CSharp.Core;
 using WPF_MiniForms_CSharp.EncryptionModule;
 using WPF_MiniForms_CSharp.FolderModule;
 using WPF_MiniForms_CSharp.MailModule;
-using WPF_MiniForms_CSharp.Models.Helper;
 using WPF_MiniForms_CSharp.TextModule;
 
 namespace WPF_MiniForms_CSharp;
@@ -29,7 +28,7 @@ public partial class App : Application
         services.AddTransient<EncodeRecord>();
         services.AddTransient<MailWindow>();
         services.AddTransient<WordTemplateService>();
-        services.AddTransient<PDFConversion>();
+        services.AddTransient<PdfConversion>();
         services.AddTransient<ConvertWindow>();
         services.AddTransient<TextReplaceWindow>();
         // Setup folder functionality.

@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WPF_MiniForms_CSharp.Models.Functions;
-using WPF_MiniForms_CSharp.Models.Records;
 
 namespace WPF_MiniForms_CSharp.MailModule;
 

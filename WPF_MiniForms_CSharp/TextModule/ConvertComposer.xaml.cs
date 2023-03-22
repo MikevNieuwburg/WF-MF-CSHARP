@@ -27,7 +27,7 @@ public partial class ConvertComposer : Window
 
         if (comboFrom != null)
         {
-            Service!.TaskInput = new PDFConversion(comboFrom, comboTo);
+            Service!.TaskInput = new PdfConversion(comboFrom, comboTo);
             Window = new ConvertWindow(comboFrom, comboTo);
         }
 

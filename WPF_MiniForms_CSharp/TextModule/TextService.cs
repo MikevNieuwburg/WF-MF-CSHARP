@@ -5,6 +5,7 @@ using System.Reflection;
 using iText.Kernel.Pdf;
 using Microsoft.Office.Interop.Word;
 using WPF_MiniForms_CSharp.Core;
+using WPF_MiniForms_CSharp.FolderModule;
 using WPF_MiniForms_CSharp.Models.Functions;
 using WPF_MiniForms_CSharp.Models.Interfaces;
 using Document = iText.Layout.Document;
@@ -20,7 +21,7 @@ public class TextService : IService
 
     private readonly TemporaryFolder _folder;
     private readonly FolderFunctions _functions;
-    private PDFConversion? _pdfConversion;
+    private PdfConversion? _pdfConversion;
     private TextSettings? _textSetting;
 
     public TextService(TemporaryFolder folder, FolderFunctions folderFunctions)
@@ -37,21 +38,30 @@ public class TextService : IService
     {
         if (ToPdf)
         {
-            if (TaskInput is PDFConversion conversion)
+            if (TaskInput is PdfConversion conversion)
+            {
                 _pdfConversion = conversion;
+            }
+
             TextToPdf(_functions.FolderFiles(_folder.GetTemporaryDirectory()).ToList());
             return;
         }
 
         if (TaskInput is TextSettings settings)
+        {
             _textSetting = settings;
+        }
+
         TextReplace(_functions.FolderFiles(_folder.GetTemporaryDirectory()).ToList());
     }
 
     public void TextToPdf(string filePath)
     {
         if (filePath.Split('.').Last() != _pdfConversion?.ConvertFrom.ToLower())
+        {
             return;
+        }
+
         var lines = File.ReadAllLines(filePath);
 
         switch (_pdfConversion.ConvertTo)
@@ -74,12 +84,13 @@ public class TextService : IService
             }
         }
 
-        using var pdfDocument =
-            new PdfDocument(new PdfWriter(new FileStream(filePath.Replace(FILE_EX_TXT, FILE_EX_PDF), FileMode.Create,
-                FileAccess.Write)));
-        using var document = new Document(pdfDocument);
+        using var pdfDocument = 
+            new PdfDocument(new PdfWriter(new FileStream(filePath.Replace(FILE_EX_TXT, FILE_EX_PDF), FileMode.Create, FileAccess.Write)));
+        using var document = 
+            new Document(pdfDocument);
 
-        foreach (var line in lines) document.Add(new Paragraph(line));
+        foreach (var line in lines) 
+            document.Add(new Paragraph(line));
     }
 
     public void TextToPdf(List<string> folderContent)
@@ -87,7 +98,9 @@ public class TextService : IService
         folderContent.ForEach(item =>
         {
             if (item.EndsWith(_pdfConversion?.ConvertFrom.ToLower() ?? string.Empty))
+            {
                 TextToPdf(item);
+            }
         });
     }
 
@@ -109,8 +122,10 @@ public class TextService : IService
     {
         folderContent.ForEach(item =>
         {
-            if (item.EndsWith("txt"))
+            if (item.EndsWith(FILE_EX_TXT))
+            {
                 TextReplace(item);
+            }
         });
     }
 }

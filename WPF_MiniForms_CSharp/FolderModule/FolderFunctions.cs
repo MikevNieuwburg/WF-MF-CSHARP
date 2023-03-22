@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using WPF_MiniForms_CSharp.Core;
 
-namespace WPF_MiniForms_CSharp.Models.Functions;
+namespace WPF_MiniForms_CSharp.FolderModule;
 
 public class FolderFunctions
 {

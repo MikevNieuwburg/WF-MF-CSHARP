@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using WPF_MiniForms_CSharp.Models.Functions;
-using WPF_MiniForms_CSharp.Models.Modules;
 
 namespace WPF_MiniForms_CSharp.FolderModule;
 

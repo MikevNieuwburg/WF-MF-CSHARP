@@ -6,9 +6,8 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using WPF_MiniForms_CSharp.Models.Interfaces;
-using WPF_MiniForms_CSharp.Models.Records;
 
-namespace WPF_MiniForms_CSharp.Models.Functions;
+namespace WPF_MiniForms_CSharp.MailModule;
 
 public partial class MailService : IService
 {

@@ -1,10 +1,11 @@
 ﻿using System.Windows;
-using WPF_MiniForms_CSharp.Models.Functions;
+using WPF_MiniForms_CSharp.FolderModule;
 
 namespace WPF_MiniForms_CSharp.TextModule;
 
 public partial class WordTemplate : Window
 {
+    private const string FILTER_TEXT = "Word Template (*.dotx)|*.dotx|Word Template <2007(*.dot)|*.dot";
     private readonly FolderFunctions _folder;
 
     public WordTemplate(WordTemplateService templateService, FolderFunctions folder)
@@ -22,7 +23,7 @@ public partial class WordTemplate : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        templateTb.Text = _folder.GetFile("Word Template (*.dotx)|*.dotx|Word Template <2007(*.dot)|*.dot");
+        templateTb.Text = _folder.GetFile(FILTER_TEXT);
         Service.Template = templateTb.Text;
     }
 
