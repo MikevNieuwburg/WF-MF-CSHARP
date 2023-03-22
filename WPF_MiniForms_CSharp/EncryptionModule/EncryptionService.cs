@@ -10,9 +10,8 @@ public class EncryptionService : IService
         _base = base64;
         _folder = folderFunctions;
     }
-
+    
     public object? TaskInput { get; set; }
-    public object? TaskResult { get; set; }
 
     public void Execute()
     {

@@ -11,7 +11,6 @@ public partial class MailService : IService
     private ComposeMail? _mail;
 
     public object? TaskInput { get; set; }
-    public object? TaskResult { get; set; }
 
     public void Execute()
     {

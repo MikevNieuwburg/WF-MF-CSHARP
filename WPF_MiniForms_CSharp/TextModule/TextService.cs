@@ -24,7 +24,6 @@ public class TextService : IService
 
     public bool ToPdf { get; set; }
     public object? TaskInput { get; set; }
-    public object? TaskResult { get; set; }
 
     public void Execute()
     {
