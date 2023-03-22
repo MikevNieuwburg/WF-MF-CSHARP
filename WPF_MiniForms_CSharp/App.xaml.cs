@@ -7,7 +7,7 @@ public partial class App : Application
     public App()
     {
         _host = Host.CreateDefaultBuilder()
-            .ConfigureServices((context, services) => { ConfigureServices(services); })
+            .ConfigureServices((context, services) => ConfigureServices(services))
             .Build();
     }
 

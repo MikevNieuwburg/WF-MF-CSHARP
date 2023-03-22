@@ -88,8 +88,12 @@ public class TextService : IService
     {
         var lines = File.ReadAllLines(filePath);
         for (var i = 0; i < lines.Length; i++)
+        {
             if (lines[i].Contains(_textSetting?.ReplaceFrom ?? string.Empty) && _textSetting?.ReplaceFrom != null)
+            {
                 lines[i] = lines[i].Replace(_textSetting.ReplaceFrom, _textSetting.ReplaceWith);
+            }
+        }
 
         File.WriteAllLines(filePath, lines);
     }

@@ -49,7 +49,9 @@ public partial class MailService : IService
     private void SendMail()
     {
         if (_mail?.Receivers == null)
+        {
             return;
+        }
 
         var receivers = _mail.Receivers.Contains(';')
             ? _mail.Receivers.Split(';').ToList()
@@ -69,20 +71,32 @@ public partial class MailService : IService
         };
 
         if (receivers.Any())
+        {
             foreach (var receiver in receivers)
+            {
                 message.To.Add(new MailAddress(receiver));
+            }
+        }
 
         if (carbonCopy.Any() && carbonCopy[0] != string.Empty)
+        {
             foreach (var cc in carbonCopy)
+            {
                 message.CC.Add(new MailAddress(cc));
+            }
+        }
 
         if (blindCarbonCopy.Any() && blindCarbonCopy[0] != string.Empty)
+        {
             foreach (var bcc in blindCarbonCopy)
+            {
                 message.Bcc.Add(new MailAddress(bcc));
+            }
+        }
 
         message.From = new MailAddress(settings.Default.EMAIL);
 
-        var smtp = new SmtpClient();
+        using var smtp = new SmtpClient();
         smtp.Host = SMPT_SERVICE;
         smtp.Port = 587;
         smtp.EnableSsl = true;
