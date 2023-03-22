@@ -14,6 +14,10 @@ namespace WPF_MiniForms_CSharp.TextModule;
 
 public class TextService : IService
 {
+    private const string FILE_EX_DOCX = "docx";
+    private const string FILE_EX_TXT = "txt";
+    private const string FILE_EX_PDF = "pdf";
+
     private readonly TemporaryFolder _folder;
     private readonly FolderFunctions _functions;
     private PDFConversion? _pdfConversion;
@@ -52,7 +56,7 @@ public class TextService : IService
 
         switch (_pdfConversion.ConvertTo)
         {
-            case "docx":
+            case FILE_EX_DOCX:
             {
                 object oMissing = Missing.Value;
                 var application = new Application();
@@ -62,7 +66,7 @@ public class TextService : IService
                 wordDoc.Close();
                 return;
             }
-            case "txt":
+            case FILE_EX_TXT:
             {
                 using StreamWriter file = new(filePath);
                 foreach (var line in lines) file.WriteLine(line);
@@ -71,7 +75,7 @@ public class TextService : IService
         }
 
         using var pdfDocument =
-            new PdfDocument(new PdfWriter(new FileStream(filePath.Replace("txt", "pdf"), FileMode.Create,
+            new PdfDocument(new PdfWriter(new FileStream(filePath.Replace(FILE_EX_TXT, FILE_EX_PDF), FileMode.Create,
                 FileAccess.Write)));
         using var document = new Document(pdfDocument);
 

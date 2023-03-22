@@ -14,7 +14,6 @@ public class WordTemplateService : IService
     public object? TaskInput { get; set; }
     public object? TaskResult { get; set; }
 
-
     /// <summary>
     ///     https://stackoverflow.com/questions/6294084/change-or-add-template-in-Word-document
     ///     Used this source to apply templates to a Word document.
