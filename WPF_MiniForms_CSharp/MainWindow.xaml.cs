@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using WPF_MiniForms_CSharp.Core;
-using WPF_MiniForms_CSharp.EncryptionModule;
-using WPF_MiniForms_CSharp.FolderModule;
-using WPF_MiniForms_CSharp.MailModule;
-using WPF_MiniForms_CSharp.Models.Interfaces;
-using WPF_MiniForms_CSharp.TextModule;
-
-namespace WPF_MiniForms_CSharp;
+﻿namespace WPF_MiniForms_CSharp;
 
 public partial class MainWindow : Window
 {
@@ -33,7 +19,8 @@ public partial class MainWindow : Window
         {
             if (_moduleNames! != null)
             {
-                _moduleNames.Add(string.Concat(module.ToString()!.Select(s => char.IsUpper(s) ? " " + s : s.ToString()))
+                _moduleNames.Add(string
+                    .Concat(module.ToString()!.Select(s => char.IsUpper(s) ? " " + s : s.ToString()))
                     .TrimStart(' '));
             }
         }
@@ -59,9 +46,12 @@ public partial class MainWindow : Window
         if (listBoxModules.SelectedItem == null)
             return;
         _selectedModule = listBoxModules.SelectedItem.ToString()!;
-        if (Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModules.SelectedItem.ToString()!.Replace(" ", "")) is
-            ModuleEnum.ModulesEnum parsedValue)
-            _moduleEnum = parsedValue;
+        _moduleEnum = Enum.Parse(typeof(ModuleEnum.ModulesEnum),
+                listBoxModules.SelectedItem.ToString()!.Replace(" ", "")) switch
+            {
+                ModuleEnum.ModulesEnum parsedValue => parsedValue,
+                _ => _moduleEnum
+            };
         labelSelectedItem.Content = $"Item Selected : {listBoxModules.SelectedItem}";
     }
 
@@ -112,7 +102,7 @@ public partial class MainWindow : Window
                     listBoxModuleOrder.Items.Add(_selectedModule);
                     if (encryptionWindow is { CryptoObject: { }, Service: { } })
                         encryptionWindow.Service.TaskInput = encryptionWindow.CryptoObject;
-                    _modules.Add(encryptionWindow!.Service);
+                    _modules.Add(encryptionWindow!.Service!);
                     _windows.Add(encryptionWindow!.Window);
                 }
 
@@ -212,9 +202,12 @@ public partial class MainWindow : Window
     {
         if (listBoxModuleOrder.Items.Count == 0 || _lastSelectedModule > listBoxModuleOrder.Items.Count)
             return;
-        if (Enum.Parse(typeof(ModuleEnum.ModulesEnum), listBoxModuleOrder.SelectedItem.ToString()!.Replace(" ", "")) is
-            ModuleEnum.ModulesEnum parsedValue)
-            _orderModule = parsedValue;
+        _orderModule = Enum.Parse(typeof(ModuleEnum.ModulesEnum),
+                listBoxModuleOrder.SelectedItem.ToString()!.Replace(" ", "")) switch
+            {
+                ModuleEnum.ModulesEnum parsedValue => parsedValue,
+                _ => _orderModule
+            };
 
         OpenModule(_orderModule, _windows[listBoxModuleOrder.SelectedIndex]);
     }

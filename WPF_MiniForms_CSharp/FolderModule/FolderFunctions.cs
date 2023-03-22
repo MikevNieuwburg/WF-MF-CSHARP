@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Security;
 using System.Windows.Forms;
-using WPF_MiniForms_CSharp.Core;
 
 namespace WPF_MiniForms_CSharp.FolderModule;
 
@@ -27,13 +24,10 @@ public class FolderFunctions
             SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             ShowNewFolderButton = true
         };
-        if (dialog.ShowDialog() == DialogResult.OK)
-        {
-            dialog.Dispose();
-            return dialog.SelectedPath + @"\";
-        }
-
-        return string.Empty;
+        if (dialog.ShowDialog() != DialogResult.OK)
+            return string.Empty;
+        dialog.Dispose();
+        return dialog.SelectedPath + @"\";
     }
 
     public IEnumerable<string> FolderFiles(string path)
@@ -47,8 +41,15 @@ public class FolderFunctions
         }
         catch (Exception ex)
         {
-            throw new Exception("Either the argument passed failed to parse or the path is too long.",
-                ex.InnerException);
+            throw ex switch
+            {
+                ArgumentException argException => argException,
+                DirectoryNotFoundException directoryNotFoundException => directoryNotFoundException,
+                IOException exception => exception,
+                SecurityException securityException => securityException,
+                UnauthorizedAccessException unauthorizedAccessException => unauthorizedAccessException,
+                _ => ex
+            };
         }
     }
 

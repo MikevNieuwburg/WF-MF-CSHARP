@@ -15,16 +15,16 @@ public class EncryptionService : IService
 
     public void Execute()
     {
-        if (TaskInput is EncodeRecord crypto)
-        {
-            if (crypto.Encode)
-            {
-                EncodeFile();
-                return;
-            }
+        if (TaskInput is not EncodeRecord crypto) 
+            return;
 
-            DecodeFile();
+        if (crypto.Encode)
+        {
+            EncodeFile();
+            return;
         }
+
+        DecodeFile();
     }
 
     private void EncodeFile()
@@ -45,7 +45,7 @@ public class EncryptionService : IService
         foreach (var item in _folder.FolderFiles(_folder.GetTemporaryFolder))
         {
             var capture = _base.Decrypt(File.ReadAllText(item));
-            File.WriteAllText(item, capture.Replace(obj?.Password + obj?.Salt, ""));
+            File.WriteAllText(item, capture.Replace(obj?.Password + obj?.Salt, string.Empty));
         }
     }
 }

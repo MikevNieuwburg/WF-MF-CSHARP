@@ -1,18 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using WPF_MiniForms_CSharp.Core;
-using WPF_MiniForms_CSharp.Models.Interfaces;
-
-namespace WPF_MiniForms_CSharp.FolderModule;
+﻿namespace WPF_MiniForms_CSharp.FolderModule;
 
 public class FolderService : IService
 {
     private readonly FolderFunctions _functions;
 
     #region Interface implementation
-
-    public object? TaskResult { get; set; }
+    
     public object? TaskInput { get; set; }
     internal ModuleEnum.ModulesEnum Module { get; set; }
 
@@ -47,11 +40,13 @@ public class FolderService : IService
 
             return;
         }
+
         var tempFolder = _functions.GetTemporaryFolder;
         if (Directory.Exists(path) == false)
             throw new DirectoryNotFoundException(path);
 
         foreach (var file in _functions.FolderFiles(tempFolder))
+        {
             try
             {
                 var filename = file.Split('\\').Last();
@@ -61,6 +56,7 @@ public class FolderService : IService
             {
                 throw new Exception(ex.Message);
             }
+        }
     }
 
     #endregion

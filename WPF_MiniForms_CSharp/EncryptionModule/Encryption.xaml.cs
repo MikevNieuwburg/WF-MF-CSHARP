@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace WPF_MiniForms_CSharp.EncryptionModule;
+﻿namespace WPF_MiniForms_CSharp.EncryptionModule;
 
 public partial class Encryption : Window
 {

@@ -1,8 +1,5 @@
-﻿using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using Microsoft.Office.Interop.Word;
-using WPF_MiniForms_CSharp.Models.Interfaces;
+﻿using Microsoft.Office.Interop.Word;
+using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace WPF_MiniForms_CSharp.TextModule;
 
@@ -11,13 +8,9 @@ public class WordTemplateService : IService
     public string? Output { get; set; }
     public string? OutputName { get; set; }
     public string? Template { get; set; }
-    public object? TaskInput { get; set; }
     public object? TaskResult { get; set; }
-
-    /// <summary>
-    ///     https://stackoverflow.com/questions/6294084/change-or-add-template-in-Word-document
-    ///     Used this source to apply templates to a Word document.
-    /// </summary>
+    public object? TaskInput { get; set; }
+    
     public void Execute()
     {
         var input = string.Empty;
